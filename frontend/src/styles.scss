@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+/* -------------------------------------------------------
+   GLOBAL TYPOGRAPHY
+--------------------------------------------------------*/
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: #ecd1c8; // soft rose-cream background
+  color: #333;
+}
+
+/* For Urdu Typography */
+.ur, .title-ur, .subtitle-ur, .heading-ur, .text-ur {
+  font-family: 'Noto Nastaliq Urdu', serif !important;
+  direction: rtl;
+  text-align: right;
+}
+
+/* -------------------------------------------------------
+   RED–ROSE THEME
+--------------------------------------------------------*/
+
+$rose-dark: #b31237;
+$rose-medium: #c23851;
+$cream-bg: #ecd1c8;
+$deeper-cream: #cda8a8;
+
+/* -------------------------------------------------------
+   HERO SECTION
+--------------------------------------------------------*/
+
+.hero {
+  text-align: center;
+  padding: 100px 20px;
+  background: linear-gradient(to bottom right, $rose-dark, $rose-medium);
+  color: #ecd1c8;
+}
+
+.get-started-hero-btn {
+  background: linear-gradient(to right, $cream-bg, $deeper-cream);
+  color: $rose-dark;
+  border: none;
+  padding: 16px 40px;
+  margin-top: 20px;
+  font-size: 1.25rem;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  box-shadow: 0 4px 12px rgba(179, 18, 55, 0.25);
+}
+
+.get-started-hero-btn:hover {
+  transform: translateY(+3px);
+  background: linear-gradient(to right, $deeper-cream, $cream-bg);
+  transition: 0.50s ease-in-out;
+  box-shadow: 0 6px 16px rgb(255, 255, 255);
+}
+
+.get-started-hero-btn:active {
+  transform: scale(0.96);
+}
+.title-en {
+  font-size: 3.4rem;
+  margin: 0;
+  font-weight: 700;
+}
+
+.title-ur {
+  font-size: 2.8rem;
+  margin-top: 12px;
+}
+
+/* Subtitles */
+.subtitle-en {
+  font-size: 1.25rem;
+  max-width: 650px;
+  margin: 18px auto;
+  opacity: 0.9;
+}
+
+.subtitle-ur {
+  font-size: 1.45rem;
+  max-width: 720px;
+  margin: 12px auto;
+  opacity: 0.95;
+}
+
+/* -------------------------------------------------------
+   SECTIONS
+--------------------------------------------------------*/
+
+.section {
+  padding: 55px 20px;
+  max-width: 900px;
+  margin: auto;
+}
+
+.heading-en {
+  color: $rose-dark;
+  font-size: 2.1rem;
+  margin-bottom: 5px;
+  font-weight: 700;
+}
+
+.heading-ur {
+  color: $rose-dark;
+  font-size: 1.9rem;
+  margin-bottom: 20px;
+}
+
+.text {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  margin-bottom: 20px;
+}
+
+.text-ur {
+  font-size: 1.55rem;
+  line-height: 2.2;
+  margin-bottom: 25px;
+}
+
+/* -------------------------------------------------------
+   FOOTER
+--------------------------------------------------------*/
+
+.footer {
+  text-align: center;
+  padding: 22px;
+  background: $rose-dark;
+  color: white;
+  margin-top: 60px;
+  font-size: 0.95rem;
+}
+/* -------------------------------------------------------
+   GET STARTED BUTTON
+--------------------------------------------------------*/
+
+.cta-container {
+  text-align: center;
+  margin: 40px auto 20px auto;
+}
+
+.get-started-btn {
+  background: linear-gradient(to right, $rose-dark, $rose-medium);
+  color: white;
+  border: none;
+  padding: 16px 40px;
+  font-size: 1.25rem;
+  font-family: 'Playfair Display', serif;
+  border-radius: 40px;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  box-shadow: 0 4px 12px rgba(179, 18, 55, 0.25);
+}
+
+.get-started-btn:hover {
+  transform: translateY(+3px);
+  background: linear-gradient(to right, $rose-medium, $rose-dark);
+  transition: 0.50s ease-in-out;
+  box-shadow: 0 10px 16px rgba(179, 18, 55, 0.35);
+}
+
+.get-started-btn:active {
+  transform: scale(0.96);
+}
+
+/* Mobile full-width button */
+@media (max-width: 600px) {
+  .get-started-btn {
+    width: 90%;
+    font-size: 1.3rem;
+    padding: 18px;
+    border-radius: 50px;
+  }
+}

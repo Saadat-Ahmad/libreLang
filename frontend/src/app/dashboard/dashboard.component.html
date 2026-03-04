@@ -1,0 +1,36 @@
+<div>
+<section class="dashboard-header">
+  <!-- Header -->
+  <h1 class="dash-title-en">Libreاُردو - Dashboard</h1>
+</section>
+<!-- Lessons Section -->
+<div class="dashboard">
+  <section class="lessons-section">
+    <h2 class="section-title-en">Lessons</h2>
+    <h2 class="section-title-ur">اسباق</h2>
+
+    <div class="lessons-grid">
+      <div class="lesson-card" *ngFor="let lesson of lessons; let i = index">
+        <div class="lesson-number">Lesson {{ i + 1 }}</div>
+        <div class="lesson-title-ur">{{ lesson.urdu }}</div>
+        <div class="lesson-title-en">{{ lesson.english }}</div>
+        <button class="open-btn" (click)="openLesson(lesson, i)">Open</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Materials Section -->
+  <section class="materials-section">
+    <h2 class="section-title-en">Learning Materials</h2>
+    <h2 class="section-title-ur">مطالعہ مواد</h2>
+
+    <div class="materials-grid">
+      <div class="material-card" *ngFor="let item of materials">
+        <div class="material-icon">📘</div>
+        <div class="material-name">{{ item }}</div>
+        <button class="open-btn" (click)="viewMaterial(item)">View</button>
+      </div>
+    </div>
+  </section>
+  </div>
+</div>
