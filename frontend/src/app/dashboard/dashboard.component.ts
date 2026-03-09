@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core';  
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,9 +10,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  constructor(private router: Router) {}
   lessons = [
-    { urdu: "حروفِ تہجی", english: "Alphabet" },
+    { urdu: "حروفِ تہجی", english: "alphabets" },
     { urdu: "الفاظ", english: "Words" },
     { urdu: "املا", english: "Spelling" },
     { urdu: "افعال", english: "Verbs" },
@@ -34,7 +35,7 @@ export class DashboardComponent {
   // Add click handlers
   openLesson(lesson: any, index: number) {
     console.log('Opening lesson:', lesson, 'at index:', index);
-    // TODO: Navigate to lesson page
+    this.router.navigateByUrl(`/${this.lessons[index].english}`);
   }
 
   viewMaterial(material: string) {

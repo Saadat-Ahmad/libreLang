@@ -1,0 +1,127 @@
+<div class="lesson-container">
+  
+    <div class="lesson-header">
+      <button class="back-btn" (click)="goBack()">
+        <span class="arrow">←</span> Back
+      </button>
+      <div class="lesson-title">
+        <h1>Lesson 1: Urdu Alphabet</h1>
+        <h2 class="urdu-title">حروفِ تہجی</h2>
+      </div>
+      <button class="test-btn" (click)="goToTest()">
+        Go to Test →
+      </button>
+    </div>
+  
+    <div class="progress-container">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+      </div>
+      <div class="progress-text">
+        {{ currentCardIndex + 1 }} / {{ alphabetCards.length }}
+      </div>
+    </div>
+  
+    <div class="carousel-dots">
+      <button 
+        *ngFor="let card of alphabetCards; let i = index"
+        class="dot"
+        [class.active]="i === currentCardIndex"
+        (click)="goToCard(i)"
+        [attr.aria-label]="'Go to letter ' + card.urduLetter">
+      </button>
+    </div>
+  
+    <div class="card-carousel">
+      
+      <button 
+        class="carousel-btn prev-btn" 
+        (click)="previousCard()"
+        [disabled]="currentCardIndex === 0">
+        <span class="arrow-icon">‹</span>
+      </button>
+  
+      <div class="alphabet-card">
+        
+        <div class="letter-section">
+          <div class="urdu-letter">{{ currentCard.urduLetter }}</div>
+          <div class="roman-syllables">{{ currentCard.romanSyllables }}</div>
+          <button 
+            class="play-btn" 
+            (click)="playLetterAudio()"
+            [class.playing]="isPlaying">
+            <span class="play-icon">🔊</span>
+            <span class="play-text">Play Letter Sound</span>
+          </button>
+        </div>
+  
+        <div class="card-divider"></div>
+  
+        <div class="word-section">
+          <div class="section-label">Example Word</div>
+          
+          <div class="word-image-container">
+            <!-- <img 
+              [src]="currentCard.exampleWord.imageUrl" 
+              [alt]="currentCard.exampleWord.english"
+              class="word-image"
+              (error)="$event.target.src='https://picsum.photos/id/237/200/300'"> -->
+          </div>
+  
+          <div class="word-details">
+            <div class="word-urdu">{{ currentCard.exampleWord.urdu }}</div>
+            <div class="word-roman">{{ currentCard.exampleWord.roman }}</div>
+            <div class="word-english">{{ currentCard.exampleWord.english }}</div>
+          </div>
+  
+          <button 
+            class="play-btn" 
+            (click)="playWordAudio()">
+            <span class="play-icon">🔊</span>
+            <span class="play-text">Play Word Sound</span>
+          </button>
+        </div>
+  
+      </div>
+  
+      <button 
+        class="carousel-btn next-btn" 
+        (click)="nextCard()"
+        [disabled]="currentCardIndex === alphabetCards.length - 1">
+        <span class="arrow-icon">›</span>
+      </button>
+  
+    </div>
+  
+    <div class="navigation-controls">
+      <button 
+        class="nav-btn secondary" 
+        (click)="previousCard()"
+        [disabled]="currentCardIndex === 0">
+        ← Previous
+      </button>
+      
+      <div class="card-counter">
+        Card {{ currentCardIndex + 1 }} of {{ alphabetCards.length }}
+      </div>
+      
+      <button 
+        class="nav-btn primary" 
+        (click)="nextCard()"
+        [disabled]="currentCardIndex === alphabetCards.length - 1">
+        Next →
+      </button>
+    </div>
+  
+    <div class="completion-message" *ngIf="currentCardIndex === alphabetCards.length - 1">
+      <div class="completion-card">
+        <div class="completion-icon">🎉</div>
+        <h3>Great Job!</h3>
+        <p>You've completed all alphabet cards!</p>
+        <button class="test-btn-large" (click)="goToTest()">
+          Take the Test Now →
+        </button>
+      </div>
+    </div>
+  
+  </div>
