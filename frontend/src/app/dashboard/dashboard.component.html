@@ -1,36 +1,178 @@
-<div>
-<section class="dashboard-header">
-  <!-- Header -->
-  <h1 class="dash-title-en">Libreاُردو - Dashboard</h1>
-</section>
-<!-- Lessons Section -->
-<div class="dashboard">
-  <section class="lessons-section">
-    <h2 class="section-title-en">Lessons</h2>
-    <h2 class="section-title-ur">اسباق</h2>
-
-    <div class="lessons-grid">
-      <div class="lesson-card" *ngFor="let lesson of lessons; let i = index">
-        <div class="lesson-number">Lesson {{ i + 1 }}</div>
-        <div class="lesson-title-ur">{{ lesson.urdu }}</div>
-        <div class="lesson-title-en">{{ lesson.english }}</div>
-        <button class="open-btn" (click)="openLesson(lesson, i)">Open</button>
+<div class="dashboard-container">
+  <!-- Welcome Header -->
+  <header class="welcome-header">
+    <div class="header-content">
+      <div class="welcome-text">
+        <p class="greeting">سلام, {{ userName }}! 👋</p>
+        <h1 class="dashboard-title">Libreاُردو</h1>
+        <p class="subtitle ur">آپ کی سیکھنے کی منزل</p>
+      </div>
+      
+      <!-- User Stats -->
+      <div class="user-stats">
+        <div class="stat-item">
+          <span class="stat-icon">⭐</span>
+          <div>
+            <span class="stat-value">Level {{ userLevel }}</span>
+            <span class="stat-label">Current Level</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">🔥</span>
+          <div>
+            <span class="stat-value">{{ streakDays }} Days</span>
+            <span class="stat-label">Streak</span>
+          </div>
+        </div>
+        <div class="stat-item">
+          <span class="stat-icon">💎</span>
+          <div>
+            <span class="stat-value">{{ userPoints }}</span>
+            <span class="stat-label">Points</span>
+          </div>
+        </div>
       </div>
     </div>
-  </section>
+    
+    <!-- Continue Learning Button -->
+    <button class="continue-btn" (click)="continueLearning()">
+      <span>📖</span> Continue Learning
+      <span class="arrow">→</span>
+    </button>
+  </header>
 
-  <!-- Materials Section -->
-  <section class="materials-section">
-    <h2 class="section-title-en">Learning Materials</h2>
-    <h2 class="section-title-ur">مطالعہ مواد</h2>
-
-    <div class="materials-grid">
-      <div class="material-card" *ngFor="let item of materials">
-        <div class="material-icon">📘</div>
-        <div class="material-name">{{ item }}</div>
-        <button class="open-btn" (click)="viewMaterial(item)">View</button>
-      </div>
+  <!-- Quick Stats Row -->
+  <div class="quick-stats">
+    <div class="quick-stat-card" (click)="router.navigateByUrl('/lessons')">
+      <span class="quick-stat-icon">📚</span>
+      <span class="quick-stat-value">{{ getCompletedLessonsCount() }}/{{ lessons.length }}</span>
+      <span class="quick-stat-label">Lessons Done</span>
     </div>
-  </section>
+    <div class="quick-stat-card" (click)="openCommunity()">
+      <span class="quick-stat-icon">👥</span>
+      <span class="quick-stat-value">{{ communityGroups.length }}</span>
+      <span class="quick-stat-label">Groups</span>
+    </div>
+    <div class="quick-stat-card" (click)="openChallenges()">
+      <span class="quick-stat-icon">🎯</span>
+      <span class="quick-stat-value">{{ dailyChallenges.length }}</span>
+      <span class="quick-stat-label">Challenges</span>
+    </div>
   </div>
+
+  <!-- Lessons Section -->
+  <section class="dashboard-section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title-en">Your Lessons</h2>
+        <p class="section-title-ur ur">آپ کے اسباق</p>
+      </div>
+      <div class="progress-badge">
+        {{ getOverallProgress() }}% Complete
+      </div>
+    </div>
+    
+    <div class="lessons-scroll">
+      @for (lesson of lessons; track lesson.route; let i = $index) {
+        <div 
+          class="lesson-card" 
+          [class.completed]="lesson.completed"
+          [class.in-progress]="!lesson.completed && lesson.progress > 0"
+          (click)="openLesson(lesson, i)">
+          
+          <div class="lesson-header">
+            <span class="lesson-icon">{{ lesson.icon }}</span>
+            <span class="lesson-number">#{{ i + 1 }}</span>
+            @if (lesson.completed) {
+              <span class="completed-check">✓</span>
+            }
+          </div>
+          
+          <div class="lesson-info">
+            <p class="lesson-title-ur ur">{{ lesson.urdu }}</p>
+            <p class="lesson-title-en">{{ lesson.english }}</p>
+          </div>
+          
+          <div class="lesson-footer">
+            <span 
+              class="difficulty-badge" 
+              [style.background]="getDifficultyColor(lesson.difficulty)">
+              {{ lesson.difficulty }}
+            </span>
+            
+            @if (!lesson.completed && lesson.progress > 0) {
+              <div class="progress-mini">
+                <div class="progress-mini-bar" [style.width.%]="lesson.progress"></div>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Community Section -->
+  <section class="dashboard-section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title-en">Community Groups</h2>
+        <p class="section-title-ur ur">کمیونٹی گروپس</p>
+      </div>
+      <button class="view-all-btn" (click)="openCommunity()">
+        View All →
+      </button>
+    </div>
+    
+    <div class="community-scroll">
+      @for (group of communityGroups; track group.id) {
+        <div class="community-card" (click)="openGroup(group.id)">
+          <div class="community-icon">{{ group.icon }}</div>
+          <div class="community-info">
+            <p class="community-name">{{ group.name }}</p>
+            <p class="community-name-ur ur">{{ group.nameUrdu }}</p>
+            <div class="community-stats">
+              <span>{{ group.membersCount.toLocaleString() }} members</span>
+              <span>·</span>
+              <span>{{ group.postsCount }} posts</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Daily Challenges Section -->
+  <section class="dashboard-section">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title-en">Daily Challenges</h2>
+        <p class="section-title-ur ur">روزانہ چیلنجز</p>
+      </div>
+      <button class="view-all-btn" (click)="openChallenges()">
+        View All →
+      </button>
+    </div>
+    
+    <div class="challenges-list">
+      @for (challenge of dailyChallenges; track challenge.id) {
+        <div class="challenge-card" (click)="startChallenge(challenge.id)">
+          <div class="challenge-left">
+            <span class="challenge-type-icon">{{ challenge.icon }}</span>
+            <div class="challenge-info">
+              <p class="challenge-title">{{ challenge.title }}</p>
+              <p class="challenge-description">{{ challenge.description }}</p>
+              <div class="challenge-meta">
+                <span class="challenge-points">+{{ challenge.points }} pts</span>
+                <span class="challenge-participants">👥 {{ challenge.participants }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="challenge-right">
+            <span class="challenge-time">⏱️ {{ challenge.timeLeft }}</span>
+            <button class="start-btn">Start</button>
+          </div>
+        </div>
+      }
+    </div>
+  </section>
 </div>

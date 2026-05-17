@@ -1,0 +1,180 @@
+<div class="lesson2-container">
+    <!-- Lesson Header -->
+    <header class="lesson-header">
+      <div class="header-content">
+        <span class="lesson-badge">Lesson 2</span>
+        <h1 class="lesson-title-en">Essential Vocabulary</h1>
+        <p class="lesson-subtitle-ur ur">بنیادی الفاظ</p>
+        <p class="lesson-description">
+          Build your Urdu vocabulary with these essential words. Click any card to see example sentences, listen to pronunciation, and mark words as learned.
+        </p>
+      </div>
+      
+      <!-- Progress Bar -->
+      <div class="progress-section" @fadeSlideIn>
+        <div class="progress-info">
+          <span class="progress-label">Learning Progress</span>
+          <span class="progress-count">{{ learnedCount }} / {{ totalWords }} words</span>
+        </div>
+        <div class="progress-bar-container">
+          <div 
+            class="progress-bar" 
+            [style.width.%]="totalWords > 0 ? (learnedCount / totalWords) * 100 : 0">
+          </div>
+        </div>
+      </div>
+    </header>
+  
+    <!-- Controls Section -->
+    <div class="controls-section">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Search words..." 
+          (input)="onSearch($event)"
+          [value]="searchTerm">
+      </div>
+  
+      <!-- View Toggle -->
+      <div class="view-toggle">
+        <button 
+          class="view-btn" 
+          [class.active]="viewMode === 'grid'"
+          (click)="toggleViewMode('grid')"
+          aria-label="Grid view">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7"></rect>
+            <rect x="14" y="3" width="7" height="7"></rect>
+            <rect x="3" y="14" width="7" height="7"></rect>
+            <rect x="14" y="14" width="7" height="7"></rect>
+          </svg>
+        </button>
+        <button 
+          class="view-btn" 
+          [class.active]="viewMode === 'list'"
+          (click)="toggleViewMode('list')"
+          aria-label="List view">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="8" y1="6" x2="21" y2="6"></line>
+            <line x1="8" y1="12" x2="21" y2="12"></line>
+            <line x1="8" y1="18" x2="21" y2="18"></line>
+            <line x1="3" y1="6" x2="3.01" y2="6"></line>
+            <line x1="3" y1="12" x2="3.01" y2="12"></line>
+            <line x1="3" y1="18" x2="3.01" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  
+    <!-- Category Filters -->
+    <nav class="category-filters">
+      @for (category of categories; track category.id) {
+        <button 
+          class="category-btn"
+          [class.active]="selectedCategory === category.id"
+          (click)="selectCategory(category.id)">
+          <span class="category-icon">{{ category.icon }}</span>
+          <span class="category-name">{{ category.name }}</span>
+        </button>
+      }
+    </nav>
+  
+    <!-- Words Display -->
+    <div class="words-container" [class.grid-view]="viewMode === 'grid'" [class.list-view]="viewMode === 'list'" @staggerList>
+      @for (word of filteredWords; track word.id) {
+        <div 
+          class="word-card" 
+          [class.flipped]="flippedCardId === word.id"
+          [class.learned]="word.learned"
+          (click)="flipCard(word.id)">
+          
+          <!-- Card Front -->
+          <div class="card-front">
+            <div class="card-header">
+              <span class="word-category-badge">
+                {{ getCategoryIcon(word.category) }} {{ getCategoryName(word.category) }}
+              </span>
+              <button 
+                class="learn-btn" 
+                [class.marked]="word.learned"
+                (click)="toggleLearned(word, $event)"
+                [attr.aria-label]="word.learned ? 'Mark as unlearned' : 'Mark as learned'">
+                {{ word.learned ? '✓ Learned' : 'Learn' }}
+              </button>
+            </div>
+            
+            <div class="card-body">
+              <p class="word-urdu ur">{{ word.urdu }}</p>
+              <p class="word-transliteration">{{ word.transliteration }}</p>
+              <p class="word-english">{{ word.english }}</p>
+            </div>
+            
+            <div class="card-footer">
+              <button class="speak-btn" (click)="speakWord(word, $event)" aria-label="Listen to pronunciation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                Listen
+              </button>
+              <span class="flip-hint">Click for example</span>
+            </div>
+          </div>
+          
+          <!-- Card Back (Example) -->
+          <div class="card-back">
+            <div class="card-header">
+              <span class="example-label">📖 Example Usage</span>
+              <button 
+                class="learn-btn" 
+                [class.marked]="word.learned"
+                (click)="toggleLearned(word, $event)"
+                [attr.aria-label]="word.learned ? 'Mark as unlearned' : 'Mark as learned'">
+                {{ word.learned ? '✓ Learned' : 'Learn' }}
+              </button>
+            </div>
+            
+            <div class="card-body">
+              <p class="example-urdu ur">{{ word.example }}</p>
+              <p class="example-transliteration">{{ word.exampleTransliteration }}</p>
+              <p class="example-translation">{{ word.exampleTranslation }}</p>
+            </div>
+            
+            <div class="card-footer">
+              <button class="speak-btn" (click)="speakExample(word, $event)" aria-label="Listen to example">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+                Listen
+              </button>
+              <span class="flip-hint">Click to flip back</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  
+    <!-- Empty State -->
+    @if (filteredWords.length === 0) {
+      <div class="empty-state" @fadeSlideIn>
+        <span class="empty-icon">🔍</span>
+        <h3>No words found</h3>
+        <p>Try adjusting your search or category filter</p>
+      </div>
+    }
+  
+    <!-- Lesson Navigation -->
+    <div class="lesson-nav">
+      <button class="nav-btn next-btn" (click)="navigateToPractise()">
+        Practice
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+  </div>

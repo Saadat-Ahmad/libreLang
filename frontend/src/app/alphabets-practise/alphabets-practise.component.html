@@ -1,0 +1,158 @@
+<!-- lesson1-practice.component.html -->
+
+<div class="practice-container">
+
+    <!-- Normal Practice View -->
+    <div class="practice-content" *ngIf="!showResults">
+      
+      <!-- Header -->
+      <div class="practice-header">
+        <button class="back-btn" (click)="goToLesson()">
+          ← Back to Lesson
+        </button>`
+        <div class="practice-title">
+          <h1>Lesson 1 Practice</h1>
+          <h2 class="urdu-title">مشق</h2>
+        </div>
+        <button class="reset-btn" (click)="resetPractice()">
+          🔄 Reset
+        </button>
+      </div>
+  
+      <!-- Progress -->
+      <div class="progress-section">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="progressPercentage"></div>
+        </div>
+        <div class="progress-info">
+          <span>Question {{ currentQuestionIndex + 1 }} / {{ questions.length }}</span>
+          <span class="score">Score: {{ score }} / {{ questions.length }}</span>
+        </div>
+      </div>
+  
+      <!-- Instructions -->
+      <div class="instructions">
+        <p>👁️ Look at the image and select the Urdu alphabet that the word starts with</p>
+      </div>
+  
+      <!-- Question Card -->
+      <div class="question-card">
+        
+        <!-- Image -->
+        <div class="image-section">
+          <div class="image-container">
+            <img 
+              [src]="currentQuestion.imageUrl" 
+              [alt]="currentQuestion.wordEnglish"
+              class="question-image">
+              <!-- (error)="$event.target.src='https://fastly.picsum.photos/id/1/200/300.jpg'"> -->
+          </div>
+          <div class="word-info">
+            <div class="word-urdu">{{ currentQuestion.wordUrdu }}</div>
+            <div class="word-english">{{ currentQuestion.wordEnglish }}</div>
+          </div>
+        </div>
+  
+        <!-- Options -->
+        <div class="options-section">
+          <h3>Which alphabet does this word start with?</h3>
+          <div class="options-grid">
+            <button 
+              *ngFor="let option of currentQuestion.options"
+              class="option-btn"
+              [class.selected]="selectedAnswer === option"
+              [class.correct]="showFeedback && option === currentQuestion.correctAnswer"
+              [class.incorrect]="showFeedback && selectedAnswer === option && !isCorrect"
+              [disabled]="showFeedback"
+              (click)="selectAnswer(option)">
+              {{ option }}
+            </button>
+          </div>
+        </div>
+  
+        <!-- Feedback -->
+        <div class="feedback" *ngIf="showFeedback">
+          <div class="feedback-card" [class.correct]="isCorrect" [class.incorrect]="!isCorrect">
+            <div class="feedback-icon">{{ isCorrect ? '✓' : '✗' }}</div>
+            <div class="feedback-text">
+              <strong>{{ isCorrect ? 'Correct!' : 'Incorrect' }}</strong>
+              <p *ngIf="!isCorrect">
+                The correct answer is <span class="correct-letter">{{ currentQuestion.correctAnswer }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Submit Button -->
+        <button 
+          class="submit-btn"
+          [disabled]="!selectedAnswer || showFeedback"
+          (click)="submitAnswer()">
+          {{ showFeedback ? 'Next question...' : 'Submit Answer' }}
+        </button>
+  
+      </div>
+  
+      <!-- Navigation -->
+      <div class="navigation-controls">
+        <button 
+          class="nav-btn secondary" 
+          (click)="previousQuestion()"
+          [disabled]="currentQuestionIndex === 0">
+          ← Previous
+        </button>
+        
+        <div class="question-counter">
+          {{ currentQuestionIndex + 1 }} of {{ questions.length }}
+        </div>
+        
+        <button 
+          class="nav-btn primary" 
+          (click)="nextQuestion()"
+          [disabled]="currentQuestionIndex === questions.length - 1">
+          Next →
+        </button>
+      </div>
+  
+    </div>
+  
+    <!-- Results View -->
+    <div class="results-view" *ngIf="showResults">
+      <div class="results-card">
+        <div class="results-icon">🎉</div>
+        <h2>Practice Complete!</h2>
+        <h3 class="urdu-title">مبارک ہو!</h3>
+        
+        <div class="score-display">
+          <div class="score-circle">
+            <div class="score-number">{{ getScorePercentage() }}%</div>
+            <div class="score-label">Score</div>
+          </div>
+        </div>
+  
+        <div class="score-details">
+          <div class="detail-item">
+            <span class="detail-label">Correct Answers:</span>
+            <span class="detail-value">{{ score }} / {{ questions.length }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Rating:</span>
+            <span class="detail-value">{{ getScoreRating() }}</span>
+          </div>
+        </div>
+  
+        <div class="results-actions">
+          <button class="action-btn primary" (click)="retryPractice()">
+            🔄 Practice Again
+          </button>
+          <button class="action-btn secondary" (click)="goToLesson()">
+            📚 Review Lesson
+          </button>
+          <button class="action-btn secondary" (click)="goToDashboard()">
+            🏠 Dashboard
+          </button>
+        </div>
+      </div>
+    </div>
+  
+  </div>

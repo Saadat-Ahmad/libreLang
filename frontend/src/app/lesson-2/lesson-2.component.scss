@@ -1,0 +1,600 @@
+/* -------------------------------------------------------
+   LESSON 2 CONTAINER
+--------------------------------------------------------*/
+.lesson2-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 50px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* -------------------------------------------------------
+     LESSON HEADER
+  --------------------------------------------------------*/
+  .lesson-header {
+    text-align: center;
+    padding: 45px 20px 30px;
+    background: linear-gradient(135deg, #b31237 0%, #c23851 50%, #d46577 100%);
+    color: #fff;
+    border-radius: 0 0 28px 28px;
+    margin: 0 -20px 30px;
+    box-shadow: 0 6px 24px rgba(179, 18, 55, 0.2);
+  
+    .lesson-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 5px 18px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+  
+    .lesson-title-en {
+      font-size: 2.4rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+  
+    .lesson-subtitle-ur {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 1.8rem;
+      margin: 0 0 12px;
+      opacity: 0.9;
+      direction: rtl;
+    }
+  
+    .lesson-description {
+      font-size: 0.95rem;
+      opacity: 0.9;
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  }
+  
+  /* Progress Section */
+  .progress-section {
+    margin-top: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 14px 18px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .progress-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+  
+  .progress-count {
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  
+  .progress-bar-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background: #ecd1c8;
+    border-radius: 3px;
+    transition: width 0.5s ease-out;
+  }
+  
+  /* -------------------------------------------------------
+     CONTROLS SECTION
+  --------------------------------------------------------*/
+  .controls-section {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+  
+  .search-container {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    color: #8b5e5e;
+    pointer-events: none;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px 16px 12px 42px;
+    border: 2px solid #ecd1c8;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-family: 'Roboto', sans-serif;
+    background: #fff;
+    transition: border-color 0.2s ease;
+  
+    &:focus {
+      outline: none;
+      border-color: #b31237;
+      box-shadow: 0 0 0 3px rgba(179, 18, 55, 0.06);
+    }
+  
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+  
+  .view-toggle {
+    display: flex;
+    gap: 4px;
+    background: #fdf5f4;
+    border-radius: 10px;
+    padding: 4px;
+  }
+  
+  .view-btn {
+    padding: 8px 10px;
+    border: none;
+    background: transparent;
+    color: #8b5e5e;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+  
+    &:hover {
+      color: #b31237;
+    }
+  
+    &.active {
+      background: #fff;
+      color: #b31237;
+      box-shadow: 0 2px 6px rgba(179, 18, 55, 0.1);
+    }
+  }
+  
+  /* -------------------------------------------------------
+     CATEGORY FILTERS
+  --------------------------------------------------------*/
+  .category-filters {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  
+    &::-webkit-scrollbar {
+      height: 3px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: #cda8a8;
+      border-radius: 2px;
+    }
+  }
+  
+  .category-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    border: 2px solid #ecd1c8;
+    background: #fff;
+    color: #8b5e5e;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  
+    &:hover {
+      border-color: #c23851;
+      color: #b31237;
+    }
+  
+    &.active {
+      background: #b31237;
+      color: #fff;
+      border-color: #b31237;
+      box-shadow: 0 3px 10px rgba(179, 18, 55, 0.2);
+    }
+  
+    .category-icon {
+      font-size: 0.95rem;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     WORDS GRID/LIST
+  --------------------------------------------------------*/
+  .words-container {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 40px;
+  
+    &.grid-view {
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+  
+    &.list-view {
+      grid-template-columns: 1fr;
+  
+      .word-card {
+        flex-direction: row;
+        align-items: center;
+  
+        .card-front,
+        .card-back {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 16px;
+          width: 100%;
+        }
+  
+        .card-body {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+  
+        .word-urdu {
+          font-size: 1.3rem;
+          min-width: 100px;
+        }
+  
+        .word-transliteration {
+          min-width: 120px;
+        }
+      }
+    }
+  }
+  
+  /* -------------------------------------------------------
+     WORD CARD
+  --------------------------------------------------------*/
+  .word-card {
+    background: #fff;
+    border: 2px solid #ecd1c8;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    min-height: 200px;
+    perspective: 1000px;
+  
+    &:hover {
+      border-color: #c23851;
+      box-shadow: 0 6px 20px rgba(179, 18, 55, 0.08);
+      transform: translateY(-2px);
+    }
+  
+    &.flipped {
+      .card-front {
+        display: none;
+      }
+      .card-back {
+        display: flex;
+      }
+    }
+  
+    &.learned {
+      border-color: #4caf50;
+      background: #f9fdf9;
+  
+      &:hover {
+        border-color: #66bb6a;
+      }
+    }
+  }
+  
+  .card-front,
+  .card-back {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    height: 100%;
+    min-height: 200px;
+  }
+  
+  .card-back {
+    display: none;
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  
+  .word-category-badge,
+  .example-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8b5e5e;
+    background: #fdf5f4;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+  
+  .learn-btn {
+    padding: 5px 12px;
+    border: 1.5px solid #cda8a8;
+    background: #fff;
+    color: #8b5e5e;
+    font-size: 0.72rem;
+    font-weight: 600;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      border-color: #4caf50;
+      color: #4caf50;
+    }
+  
+    &.marked {
+      background: #f0faf0;
+      border-color: #4caf50;
+      color: #4caf50;
+    }
+  }
+  
+  .card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .word-urdu {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-size: 2rem;
+    color: #b31237;
+    margin: 0 0 6px;
+    direction: rtl;
+    line-height: 1.4;
+  }
+  
+  .word-transliteration {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+    margin: 0 0 4px;
+  }
+  
+  .word-english {
+    font-size: 1.05rem;
+    color: #333;
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  .example-urdu {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-size: 1.4rem;
+    color: #b31237;
+    margin: 0 0 8px;
+    direction: rtl;
+    line-height: 1.6;
+  }
+  
+  .example-transliteration {
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+    margin: 0 0 4px;
+  }
+  
+  .example-translation {
+    font-size: 0.95rem;
+    color: #333;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #f6ebea;
+  }
+  
+  .speak-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 7px 14px;
+    background: linear-gradient(135deg, #b31237, #c23851);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      background: linear-gradient(135deg, #8e0e2a, #a82e45);
+      transform: scale(1.03);
+    }
+  
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+  
+  .flip-hint {
+    font-size: 0.72rem;
+    color: #aaa;
+    font-style: italic;
+  }
+  
+  /* -------------------------------------------------------
+     EMPTY STATE
+  --------------------------------------------------------*/
+  .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #8b5e5e;
+  
+    .empty-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+  
+    h3 {
+      color: #b31237;
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+    }
+  
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     LESSON NAVIGATION
+  --------------------------------------------------------*/
+  .lesson-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    margin-top: 10px;
+    border-top: 1px solid #cda8a8;
+  }
+  
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 22px;
+    border: 2px solid #b31237;
+    background: transparent;
+    color: #b31237;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: 'Roboto', sans-serif;
+  
+    &:hover {
+      background: #b31237;
+      color: #fff;
+    }
+  
+    &:active {
+      transform: scale(0.96);
+    }
+  
+    svg {
+      flex-shrink: 0;
+    }
+  }
+  
+  .progress-indicator {
+    font-size: 0.85rem;
+    color: #8b5e5e;
+    font-weight: 500;
+  }
+  
+  /* -------------------------------------------------------
+     RESPONSIVE
+  --------------------------------------------------------*/
+  @media (max-width: 600px) {
+    .lesson2-container {
+      padding: 0 12px 30px;
+    }
+  
+    .lesson-header {
+      padding: 30px 14px 24px;
+      margin: 0 -12px 24px;
+      border-radius: 0 0 20px 20px;
+  
+      .lesson-title-en {
+        font-size: 1.8rem;
+      }
+  
+      .lesson-subtitle-ur {
+        font-size: 1.4rem;
+      }
+    }
+  
+    .words-container.grid-view {
+      grid-template-columns: 1fr;
+    }
+  
+    .word-urdu {
+      font-size: 1.6rem;
+    }
+  
+    .category-filters {
+      gap: 4px;
+    }
+  
+    .category-btn {
+      padding: 6px 12px;
+      font-size: 0.78rem;
+    }
+  
+    .lesson-nav {
+      flex-direction: column;
+      gap: 12px;
+    }
+  
+    .nav-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 12px;
+    }
+  
+    .progress-indicator {
+      order: -1;
+    }
+  
+    .controls-section {
+      flex-direction: column;
+      gap: 8px;
+    }
+  
+    .view-toggle {
+      align-self: flex-end;
+    }
+  }

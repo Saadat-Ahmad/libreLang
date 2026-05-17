@@ -1,0 +1,250 @@
+<div class="practice-sheet-container">
+    <!-- Header -->
+    <header class="practice-header">
+      <h1 class="practice-title-en">Practice Sheet</h1>
+      <p class="practice-subtitle-ur ur">مشق کی شیٹ</p>
+      
+      <!-- Score Board -->
+      <div class="score-board" @fadeIn>
+        <div class="total-score">
+          <span class="score-label">Overall Progress</span>
+          <div class="score-bar-container">
+            <div class="score-bar" [style.width.%]="totalScore"></div>
+          </div>
+          <span class="score-value">{{ totalScore }}%</span>
+        </div>
+      </div>
+    </header>
+  
+    <!-- Exercise Navigation -->
+    <nav class="exercise-tabs">
+      <button 
+        class="tab-btn" 
+        [class.active]="activeExercise === 'matching'"
+        (click)="setActiveExercise('matching')">
+        <span class="tab-icon">🔤</span>
+        <span class="tab-label">Match</span>
+        @if (matchingScore > 0) {
+          <span class="tab-badge">{{ matchingScore }}%</span>
+        }
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeExercise === 'fillblank'"
+        (click)="setActiveExercise('fillblank')">
+        <span class="tab-icon">✏️</span>
+        <span class="tab-label">Fill In</span>
+        @if (fillBlankScore > 0) {
+          <span class="tab-badge">{{ fillBlankScore }}%</span>
+        }
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeExercise === 'multiplechoice'"
+        (click)="setActiveExercise('multiplechoice')">
+        <span class="tab-icon">🎯</span>
+        <span class="tab-label">Quiz</span>
+        @if (multipleChoiceScore > 0) {
+          <span class="tab-badge">{{ multipleChoiceScore }}%</span>
+        }
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeExercise === 'pronunciation'"
+        (click)="setActiveExercise('pronunciation')">
+        <span class="tab-icon">🎤</span>
+        <span class="tab-label">Speak</span>
+        @if (pronunciationAttempts > 0) {
+          <span class="tab-badge">{{ pronunciationAttempts }}</span>
+        }
+      </button>
+    </nav>
+  
+    <!-- Matching Exercise -->
+    @if (activeExercise === 'matching') {
+      <section class="exercise-section" @cardAnimation>
+        <h2 class="exercise-title">Match Urdu with English</h2>
+        <p class="exercise-instruction">Click an Urdu phrase, then click its English translation. Click again to deselect.</p>
+        
+        <div class="matching-container">
+          <div class="matching-column urdu-column">
+            <h3 class="column-title ur">اردو</h3>
+            @for (pair of matchingPairs; track pair.id) {
+              <div 
+                class="match-card urdu-card"
+                [class.selected]="selectedUrdu === pair.id"
+                [class.matched]="pair.matched"
+                (click)="selectUrdu(pair.id)">
+                <p class="urdu-text ur">{{ pair.urdu }}</p>
+                @if (pair.matched) {
+                  <span class="match-check">✓</span>
+                }
+              </div>
+            }
+          </div>
+          
+          <div class="matching-divider"></div>
+          
+          <div class="matching-column english-column">
+            <h3 class="column-title">English</h3>
+            @for (eng of shuffledEnglish; track eng.id) {
+              <div 
+                class="match-card english-card"
+                [class.selected]="selectedEnglish === eng.id"
+                [class.matched]="getPairById(eng.pairId)?.matched"
+                (click)="selectEnglish(eng.id)">
+                <p class="english-text">{{ eng.text }}</p>
+                @if (getPairById(eng.pairId)?.matched) {
+                  <span class="match-check">✓</span>
+                }
+              </div>
+            }
+          </div>
+        </div>
+        
+        <div class="exercise-actions">
+          <span class="match-progress">
+            {{ matchedCount }} / {{ totalPairsCount }} matched
+          </span>
+          <button class="reset-btn" (click)="resetMatching()">Try Again</button>
+        </div>
+      </section>
+    }
+  
+    <!-- Fill in the Blanks Exercise -->
+    @if (activeExercise === 'fillblank') {
+      <section class="exercise-section" @cardAnimation>
+        <h2 class="exercise-title">Fill in the Blanks</h2>
+        <p class="exercise-instruction">Complete each sentence with the correct Urdu word</p>
+        
+        <div class="fillblank-container">
+          @for (blank of fillBlanks; track blank.id) {
+            <div class="fillblank-card" [class.correct]="blank.isCorrect === true" [class.incorrect]="blank.isCorrect === false">
+              <p class="sentence-text ur">{{ blank.sentence }}</p>
+              
+              <div class="input-group">
+                <input 
+                  type="text" 
+                  class="fill-input"
+                  [(ngModel)]="blank.userAnswer"
+                  [placeholder]="blank.showHint ? blank.hint : 'Type your answer...'"
+                  (keyup.enter)="checkFillBlank(blank)"
+                  [disabled]="blank.isCorrect === true">
+                
+                <div class="input-actions">
+                  @if (blank.isCorrect === null) {
+                    <button class="hint-btn" (click)="blank.showHint = !blank.showHint">
+                      {{ blank.showHint ? 'Hide' : 'Hint' }}
+                    </button>
+                    <button class="check-btn" (click)="checkFillBlank(blank)">Check</button>
+                  }
+                  @if (blank.isCorrect === true) {
+                    <span class="result-icon correct-icon">✓</span>
+                  }
+                  @if (blank.isCorrect === false) {
+                    <span class="result-icon incorrect-icon">Try again</span>
+                  }
+                </div>
+              </div>
+              
+              @if (blank.isCorrect === false) {
+                <div class="correct-answer-hint">
+                  <span>Answer: </span>
+                  <strong class="ur">{{ blank.answer }}</strong>
+                </div>
+              }
+            </div>
+          }
+        </div>
+        
+        <div class="exercise-actions">
+          <button class="reset-btn" (click)="resetFillBlanks()">Reset All</button>
+        </div>
+      </section>
+    }
+  
+    <!-- Multiple Choice Exercise -->
+    @if (activeExercise === 'multiplechoice') {
+      <section class="exercise-section" @cardAnimation>
+        <h2 class="exercise-title">Multiple Choice Quiz</h2>
+        <p class="exercise-instruction">Select the correct answer for each question</p>
+        
+        <div class="mcq-container">
+          @for (question of multipleChoiceQuestions; track question.id) {
+            <div class="mcq-card" [class.correct-card]="question.isCorrect === true" [class.incorrect-card]="question.isCorrect === false">
+              <p class="question-text">{{ question.question }}</p>
+              
+              <div class="options-grid">
+                @for (option of question.options; track option; let idx = $index) {
+                  <button 
+                    class="option-btn"
+                    [class.selected-option]="question.selectedIndex === idx"
+                    [class.correct-option]="question.isCorrect !== null && idx === question.correctIndex"
+                    [class.wrong-option]="question.selectedIndex === idx && question.isCorrect === false"
+                    [disabled]="question.selectedIndex !== null"
+                    (click)="selectMCAnswer(question, idx)">
+                    <span class="option-letter">{{ ['A', 'B', 'C', 'D'][idx] }}</span>
+                    <span class="option-text">{{ option }}</span>
+                  </button>
+                }
+              </div>
+              
+              @if (question.isCorrect !== null) {
+                <div class="feedback-text" [class.feedback-correct]="question.isCorrect" [class.feedback-incorrect]="!question.isCorrect">
+                  {{ question.isCorrect ? '✓ Great job!' : '✗ The correct answer is highlighted in green.' }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+        
+        <div class="exercise-actions">
+          <button class="reset-btn" (click)="resetMultipleChoice()">Try Again</button>
+        </div>
+      </section>
+    }
+  
+    <!-- Pronunciation Practice -->
+    @if (activeExercise === 'pronunciation') {
+      <section class="exercise-section" @cardAnimation>
+        <h2 class="exercise-title">Pronunciation Practice</h2>
+        <p class="exercise-instruction">Listen to each phrase and practice saying it out loud</p>
+        
+        <div class="pronunciation-container">
+          @for (phrase of pronunciationPhrases; track phrase.urdu; let i = $index) {
+            <div class="pronunciation-card" [class.practiced]="phrase.spoken">
+              <div class="pronunciation-content">
+                <p class="urdu-phrase ur">{{ phrase.urdu }}</p>
+                <p class="transliteration-text">{{ phrase.transliteration }}</p>
+              </div>
+              <div class="pronunciation-actions">
+                <button class="listen-btn" (click)="speakPhrase(phrase.urdu)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                  Listen
+                </button>
+                <button 
+                  class="practiced-btn" 
+                  [class.marked]="phrase.spoken"
+                  (click)="markPronounced(i)">
+                  {{ phrase.spoken ? '✓ Practiced' : 'Mark as Practiced' }}
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+  
+    <!-- Completion Message -->
+    @if (allExercisesCompleted) {
+      <div class="completion-message" @fadeIn>
+        <div class="completion-content">
+          <span class="completion-emoji">🎉</span>
+          <h3>Excellent Work!</h3>
+          <p>You've completed all practice exercises. You're ready for the next lesson!</p>
+        </div>
+      </div>
+    }
+  </div>

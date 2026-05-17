@@ -1,0 +1,71 @@
+<div class="lesson-container">
+    <!-- Lesson Header -->
+    <header class="lesson-header">
+      <div class="header-content">
+        <span class="lesson-badge">Lesson 1</span>
+        <h1 class="lesson-title-en">First Conversations</h1>
+        <p class="lesson-subtitle-ur ur">پہلی گفتگو</p>
+      </div>
+    </header>
+  
+    <!-- Introduction -->
+    <div class="section intro-section">
+      <p class="text intro-text">
+        Start speaking Urdu from day one. These essential phrases will help you greet people, introduce yourself, and handle basic polite conversation. Click any Urdu sentence to hear its pronunciation.
+      </p>
+    </div>
+  
+    <!-- Phrase Cards -->
+    <main class="phrases-grid">
+      @for (phrase of phrases; track phrase.id) {
+        <div class="phrase-card" [class.expanded]="expandedId === phrase.id">
+          <div class="card-main" (click)="toggleCard(phrase.id)">
+            <div class="card-left">
+              <p class="phrase-ur ur">{{ phrase.urdu }}</p>
+              <p class="phrase-transliteration">{{ phrase.transliteration }}</p>
+            </div>
+            <div class="card-right">
+              <p class="phrase-en">{{ phrase.english }}</p>
+              <button class="play-btn" (click)="speak(phrase.urdu, $event)" [attr.aria-label]="'Play pronunciation for ' + phrase.english">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </button>
+            </div>
+            <div class="expand-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline [attr.points]="expandedId === phrase.id ? '18 15 12 9 6 15' : '6 9 12 15 18 9'"></polyline>
+              </svg>
+            </div>
+          </div>
+          @if (expandedId === phrase.id) {
+            <div class="card-details">
+              <div class="detail-section">
+                <p class="detail-label">Literal Meaning</p>
+                <p class="detail-text">{{ phrase.literal }}</p>
+              </div>
+              <div class="detail-section">
+                <p class="detail-label">When to Use</p>
+                <p class="detail-text">{{ phrase.usage }}</p>
+              </div>
+              @if (phrase.response) {
+                <div class="detail-section response-section">
+                  <p class="detail-label">Typical Response</p>
+                  <p class="detail-text ur">{{ phrase.response.urdu }}</p>
+                  <p class="detail-text transliteration-text">{{ phrase.response.transliteration }}</p>
+                  <p class="detail-text en-text">{{ phrase.response.english }}</p>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
+    </main>
+  
+    <!-- Practice Section -->
+    <div class="section practice-section">
+      <h2 class="heading-en">Try It Out</h2>
+      <p class="text-ur ur">مشق کریں</p>
+      
+      <button class="btn btn-primary" (click)="navigateToPractise()">Practice</button>
+  </div>

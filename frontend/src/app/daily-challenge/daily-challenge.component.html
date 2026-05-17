@@ -1,0 +1,270 @@
+<div class="daily-challenge-container">
+    <!-- Header -->
+    <header class="challenge-header">
+      <div class="header-content">
+        <h1>Daily Challenges</h1>
+        <p class="ur">روزانہ کے چیلنجز</p>
+      </div>
+      
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat">
+          <span class="stat-value">{{ getCompletedCount() }}/{{ challenges.length }}</span>
+          <span class="stat-label">Completed</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ getTotalPoints() }}</span>
+          <span class="stat-label">Points Today</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ userStats?.currentStreak || 0 }}🔥</span>
+          <span class="stat-label">Day Streak</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">{{ getXPMultiplier() }}x</span>
+          <span class="stat-label">XP Multiplier</span>
+        </div>
+      </div>
+      
+      <!-- Progress Bar -->
+      <div class="progress-container">
+        <div class="progress-bar" [style.width.%]="getProgressPercentage()"></div>
+      </div>
+    </header>
+  
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'challenges'"
+        (click)="switchTab('challenges')">
+        🎯 Challenges
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'leaderboard'"
+        (click)="switchTab('leaderboard')">
+        🏆 Leaderboard
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'stats'"
+        (click)="switchTab('stats')">
+        📊 Progress
+      </button>
+    </nav>
+  
+    <!-- Challenges Tab -->
+    @if (activeTab === 'challenges') {
+      <div class="challenges-view">
+        <!-- Active Challenge -->
+        @if (activeChallengeId && getActiveChallenge(); as challenge) {
+          <div class="active-challenge" @fadeSlide>
+            <div class="challenge-timer">
+              ⏱️ {{ getFormattedTime() }}
+            </div>
+            
+            <div class="challenge-question">
+              <div class="challenge-type-badge" [style.background]="getDifficultyColor(challenge.difficulty)">
+                {{ getChallengeTypeIcon(challenge.type) }} {{ challenge.type }} · {{ challenge.difficulty }}
+              </div>
+              
+              <h2>{{ challenge.title }}</h2>
+              <p class="challenge-description">{{ challenge.description }}</p>
+              
+              <div class="challenge-prompt">
+                <p class="prompt-text">{{ challenge.content.prompt }}</p>
+                @if (challenge.content.urduText) {
+                  <p class="urdu-text ur">{{ challenge.content.urduText }}</p>
+                }
+                @if (challenge.content.englishText) {
+                  <p class="english-text">{{ challenge.content.englishText }}</p>
+                }
+              </div>
+              
+              <!-- Options -->
+              <div class="options-grid">
+                @for (option of challenge.content.options; track option) {
+                  <button 
+                    class="option-btn"
+                    [class.selected]="selectedAnswer === option"
+                    (click)="selectAnswer(option)">
+                    {{ option }}
+                  </button>
+                }
+              </div>
+              
+              <!-- Hints -->
+              @if (challenge.hints.length > 0) {
+                <div class="hints-section">
+                  <p class="hints-title">💡 Hints:</p>
+                  @for (hint of challenge.hints; track hint) {
+                    <p class="hint">{{ hint }}</p>
+                  }
+                </div>
+              }
+              
+              <button 
+                class="submit-btn"
+                [disabled]="!selectedAnswer"
+                (click)="submitChallenge()">
+                Submit Answer
+              </button>
+            </div>
+          </div>
+        }
+  
+        <!-- Challenge Cards -->
+        @if (!activeChallengeId) {
+          <div class="challenge-grid">
+            @for (challenge of challenges; track challenge.id) {
+              <div 
+                class="challenge-card" 
+                [class.completed]="challenge.completed"
+                (click)="!challenge.completed && selectChallenge(challenge.id)">
+                
+                <div class="card-header">
+                  <span class="challenge-type" [style.color]="getDifficultyColor(challenge.difficulty)">
+                    {{ getChallengeTypeIcon(challenge.type) }}
+                  </span>
+                  <span class="challenge-difficulty" [style.background]="getDifficultyColor(challenge.difficulty)">
+                    {{ challenge.difficulty }}
+                  </span>
+                  @if (challenge.completed) {
+                    <span class="completed-badge">✓</span>
+                  }
+                </div>
+                
+                <div class="card-body">
+                  <h3>{{ challenge.title }}</h3>
+                  <p>{{ challenge.description }}</p>
+                </div>
+                
+                <div class="card-footer">
+                  <span class="points">+{{ challenge.pointsReward }} pts</span>
+                  <span class="time-limit">⏱️ {{ challenge.timeLimit }}s</span>
+                  @if (challenge.score !== null) {
+                    <span class="score" [class.perfect]="challenge.score === challenge.pointsReward">
+                      {{ challenge.score }} pts
+                    </span>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  
+    <!-- Leaderboard Tab -->
+    @if (activeTab === 'leaderboard') {
+      <div class="leaderboard-view" @fadeSlide>
+        <h2 class="section-title">🏆 Weekly Leaderboard</h2>
+        
+        <!-- Top 3 -->
+        <div class="top-three">
+          @if (leaderboard.length >= 3) {
+            <!-- 2nd Place -->
+            <div class="top-card second">
+              <div class="rank-badge">🥈</div>
+              <div class="avatar">{{ leaderboard[1].avatar }}</div>
+              <p class="name">{{ leaderboard[1].username }}</p>
+              <p class="points">{{ leaderboard[1].points }} pts</p>
+            </div>
+            
+            <!-- 1st Place -->
+            <div class="top-card first">
+              <div class="rank-badge">👑</div>
+              <div class="avatar">{{ leaderboard[0].avatar }}</div>
+              <p class="name">{{ leaderboard[0].username }}</p>
+              <p class="points">{{ leaderboard[0].points }} pts</p>
+              <p class="streak">🔥 {{ leaderboard[0].streak }} day streak</p>
+            </div>
+            
+            <!-- 3rd Place -->
+            <div class="top-card third">
+              <div class="rank-badge">🥉</div>
+              <div class="avatar">{{ leaderboard[2].avatar }}</div>
+              <p class="name">{{ leaderboard[2].username }}</p>
+              <p class="points">{{ leaderboard[2].points }} pts</p>
+            </div>
+          }
+        </div>
+        
+        <!-- Full Rankings -->
+        <div class="rankings-list">
+          @for (entry of leaderboard; track entry.userId) {
+            <div class="ranking-row" [class.current-user]="entry.userId === 1">
+              <span class="rank">#{{ entry.rank }}</span>
+              <span class="avatar">{{ entry.avatar }}</span>
+              <div class="user-info">
+                <span class="name">{{ entry.username }}</span>
+                <span class="level">Level {{ entry.level }} · 🔥 {{ entry.streak }}</span>
+              </div>
+              <span class="points">{{ entry.points }} pts</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  
+    <!-- Progress Tab -->
+    @if (activeTab === 'stats' && userStats) {
+      <div class="stats-view" @fadeSlide>
+        <!-- User Stats -->
+        <div class="user-stats-grid">
+          <div class="stat-card">
+            <span class="stat-icon">⭐</span>
+            <span class="stat-value">Level {{ userStats.level }}</span>
+            <span class="stat-label">Current Level</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">🔥</span>
+            <span class="stat-value">{{ userStats.currentStreak }} Days</span>
+            <span class="stat-label">Current Streak</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">💎</span>
+            <span class="stat-value">{{ userStats.totalPoints }}</span>
+            <span class="stat-label">Total Points</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-icon">📊</span>
+            <span class="stat-value">{{ userStats.totalXp }} / {{ userStats.xpToNextLevel }}</span>
+            <span class="stat-label">XP Progress</span>
+          </div>
+        </div>
+        
+        <!-- Badges -->
+        <h3 class="section-title">🏅 Badges</h3>
+        <div class="badges-grid">
+          @for (badge of userStats.badges; track badge.id) {
+            <div class="badge-card" [class.unlocked]="badge.unlockedAt">
+              <span class="badge-icon">{{ badge.icon }}</span>
+              <span class="badge-name">{{ badge.name }}</span>
+              <span class="badge-description">{{ badge.description }}</span>
+              <div class="badge-progress">
+                <div class="badge-progress-bar" [style.width.%]="(badge.progress / badge.target) * 100"></div>
+              </div>
+              <span class="badge-count">{{ badge.progress }}/{{ badge.target }}</span>
+            </div>
+          }
+        </div>
+        
+        <!-- Weekly Progress -->
+        <h3 class="section-title">📅 Weekly Progress</h3>
+        <div class="weekly-chart">
+          @for (day of userStats.weeklyProgress; track day.date) {
+            <div class="chart-bar-container">
+              <div 
+                class="chart-bar" 
+                [style.height.%]="(day.challengesCompleted / day.totalChallenges) * 100"
+                [title]="day.date + ': ' + day.challengesCompleted + '/' + day.totalChallenges">
+              </div>
+              <span class="chart-label">{{ day.date | slice:8 }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>

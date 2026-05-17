@@ -1,0 +1,178 @@
+<div class="pronunciation-container">
+    <!-- Header -->
+    <header class="practice-header">
+      <h1 class="practice-title">Pronunciation Practice</h1>
+      <p class="practice-subtitle ur">تلفظ کی مشق</p>
+      
+      <div class="overall-progress">
+        <div class="progress-info">
+          <span>Progress: {{ completedCount }} / {{ practiceWords.length }} words</span>
+          @if (overallScore > 0) {
+            <span class="overall-score">Avg Score: {{ overallScore }}%</span>
+          }
+        </div>
+        <div class="progress-bar-container">
+          <div 
+            class="progress-bar" 
+            [style.width.%]="(completedCount / practiceWords.length) * 100">
+          </div>
+        </div>
+      </div>
+    </header>
+  
+    <!-- Word Selection -->
+    <div class="word-selection">
+      <h2 class="section-title">Select a Word to Practice</h2>
+      <div class="word-grid">
+        @for (word of practiceWords; track word.id) {
+          <button 
+            class="word-select-btn"
+            [class.active]="activeWord?.id === word.id"
+            [class.completed]="word.completed"
+            (click)="selectWord(word)">
+            <span class="word-urdu ur">{{ word.urdu }}</span>
+            <span class="word-english">{{ word.english }}</span>
+            @if (word.completed && word.score) {
+              <span class="word-score" [class.high-score]="word.score >= 70">
+                {{ word.score }}%
+              </span>
+            }
+            @if (word.completed) {
+              <span class="check-mark">✓</span>
+            }
+          </button>
+        }
+      </div>
+    </div>
+  
+    <!-- Active Practice Area -->
+    @if (activeWord) {
+      <div class="practice-area" @fadeSlideIn>
+        <div class="active-word-display">
+          <p class="active-urdu ur">{{ activeWord.urdu }}</p>
+          <p class="active-transliteration">{{ activeWord.transliteration }}</p>
+          <p class="active-english">{{ activeWord.english }}</p>
+        </div>
+  
+        <!-- Reference Audio Player -->
+        <div class="reference-section">
+          <button class="listen-btn" (click)="playReferenceAudio()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            Listen to Reference
+          </button>
+          <span class="listen-hint">Listen carefully to the pronunciation first</span>
+        </div>
+  
+        <!-- Recording Controls -->
+        <!-- Recording Controls -->
+<div class="recording-section">
+    <div class="recording-controls">
+      @if (recordingStatus === 'idle' || recordingStatus === 'complete') {
+        <button 
+          class="record-btn" 
+          (click)="startRecording()">
+          <span class="record-icon">🔴</span>
+          Start Recording
+        </button>
+      }
+      
+      @if (recordingStatus === 'recording') {
+        <div class="recording-active">
+          <div class="recording-indicator">
+            <span class="pulse-dot"></span>
+            Recording...
+          </div>
+          <div class="audio-level-bar">
+            <div 
+              class="audio-level-fill" 
+              [style.width.%]="audioLevel">
+            </div>
+          </div>
+          <button class="stop-btn" (click)="stopRecording()">
+            <span class="stop-icon">⏹</span>
+            Stop & Analyze
+          </button>
+        </div>
+      }
+  
+      @if (recordingStatus === 'analyzing') {
+        <div class="analyzing">
+          <div class="spinner"></div>
+          <span>Analyzing your pronunciation...</span>
+        </div>
+      }
+    </div>
+  
+    <!-- Playback of User Recording -->
+    @if (recordedAudioUrl && recordingStatus === 'complete') {
+      <button class="playback-btn" (click)="playRecordedAudio()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        Play Your Recording
+      </button>
+    }
+  </div>
+  
+        <!-- Results Display -->
+        @if (currentResult && recordingStatus === 'complete') {
+          <div class="results-section" @fadeSlideIn>
+            <div class="score-display" [class]="currentResult.color">
+              <div class="score-circle">
+                <svg viewBox="0 0 36 36" class="circular-chart">
+                  <path class="circle-bg" d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                  <path 
+                    class="circle" 
+                    [attr.stroke]="currentResult.color === 'green' ? '#4caf50' : currentResult.color === 'yellow' ? '#ff9800' : currentResult.color === 'orange' ? '#ff5722' : '#f44336'"
+                    [attr.stroke-dasharray]="currentResult.similarityScore + ', 100'"
+                    d="M18 2.0845
+                    a 15.9155 15.9155 0 0 1 0 31.831
+                    a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                </svg>
+                <div class="score-text">
+                  <span class="score-number">{{ currentResult.similarityScore }}</span>
+                  <span class="score-percent">%</span>
+                </div>
+              </div>
+              <span class="score-emoji">{{ getFeedbackEmoji(currentResult.similarityScore) }}</span>
+            </div>
+            
+            <div class="feedback-text" [class]="currentResult.color">
+              {{ currentResult.feedback }}
+            </div>
+            
+            <div class="action-buttons">
+              <button class="retry-btn" (click)="resetPractice()">
+                Try This Word Again
+              </button>
+              @if (activeWord && activeWord.completed) {
+                <button class="next-btn" (click)="selectNextWord()">
+                  Next Word →
+                </button>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    }
+  
+    <!-- Empty State -->
+    @if (!activeWord) {
+      <div class="empty-state" @fadeSlideIn>
+        <span class="empty-icon">🎤</span>
+        <h3>Choose a word to start practicing</h3>
+        <p>Select any word above to begin pronunciation practice</p>
+      </div>
+    }
+  
+    <!-- Controls -->
+    <div class="global-controls">
+      <button class="reset-all-btn" (click)="resetAllWords()">
+        Reset All Progress
+      </button>
+    </div>
+  </div>

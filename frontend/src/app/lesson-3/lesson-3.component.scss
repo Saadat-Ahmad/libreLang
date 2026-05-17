@@ -1,0 +1,515 @@
+/* -------------------------------------------------------
+   LESSON CONTAINER
+--------------------------------------------------------*/
+.lesson-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* -------------------------------------------------------
+     LESSON HEADER
+  --------------------------------------------------------*/
+  .lesson-header {
+    text-align: center;
+    padding: 60px 20px 40px;
+    background: linear-gradient(135deg, #b31237 0%, #c23851 50%, #d46577 100%);
+    color: #fff;
+    border-radius: 0 0 30px 30px;
+    margin: 0 -20px 40px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(179, 18, 55, 0.2);
+  
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 300px;
+      height: 300px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+  
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -10%;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+  }
+  
+  .header-content {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .lesson-badge {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    padding: 6px 20px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+  
+  .lesson-title-en {
+    font-size: 2.6rem;
+    margin: 0 0 8px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: #fff;
+  }
+  
+  .lesson-subtitle-ur {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-size: 2.2rem;
+    margin: 0;
+    opacity: 0.9;
+    direction: rtl;
+    color: #f6ebea;
+  }
+  
+  /* -------------------------------------------------------
+     SECTIONS (shared)
+  --------------------------------------------------------*/
+  .section {
+    padding: 0;
+    max-width: 100%;
+    margin: 0 0 40px;
+  }
+  
+  .intro-section {
+    margin-bottom: 36px;
+  }
+  
+  .intro-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #5a3e3e;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* -------------------------------------------------------
+     PHRASES GRID
+  --------------------------------------------------------*/
+  .phrases-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 50px;
+  }
+  
+  /* -------------------------------------------------------
+     PHRASE CARD
+  --------------------------------------------------------*/
+  .phrase-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(179, 18, 55, 0.08);
+    border: 1px solid #ecd1c8;
+    transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+  
+    &:hover {
+      box-shadow: 0 6px 24px rgba(179, 18, 55, 0.12);
+      border-color: #cda8a8;
+    }
+  
+    &.expanded {
+      box-shadow: 0 8px 28px rgba(179, 18, 55, 0.15);
+      border-color: #c23851;
+    }
+  }
+  
+  .card-main {
+    display: flex;
+    align-items: center;
+    padding: 18px 20px;
+    gap: 16px;
+    position: relative;
+    transition: background-color 0.2s ease;
+  
+    &:active {
+      background-color: #fdf5f4;
+    }
+  }
+  
+  .card-left {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .phrase-ur {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-size: 1.6rem;
+    margin: 0 0 6px;
+    direction: rtl;
+    text-align: right;
+    color: #b31237;
+    line-height: 1.5;
+  }
+  
+  .phrase-transliteration {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #888;
+    font-style: italic;
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+  
+  .card-right {
+    text-align: right;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .phrase-en {
+    font-size: 1rem;
+    margin: 0;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+  }
+  
+  .play-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: linear-gradient(135deg, #b31237, #c23851);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    flex-shrink: 0;
+  
+    &:hover {
+      transform: scale(1.08);
+      box-shadow: 0 4px 14px rgba(179, 18, 55, 0.3);
+    }
+  
+    &:active {
+      transform: scale(0.95);
+    }
+  
+    svg {
+      pointer-events: none;
+    }
+  }
+  
+  .expand-icon {
+    flex-shrink: 0;
+    color: #aaa;
+    display: flex;
+    align-items: center;
+    transition: color 0.2s ease;
+  
+    .phrase-card:hover & {
+      color: #b31237;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     CARD DETAILS (expanded state)
+  --------------------------------------------------------*/
+  .card-details {
+    padding: 0 20px 20px;
+    border-top: 1px solid #f6ebea;
+    animation: slideDown 0.25s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .detail-section {
+    margin-top: 16px;
+    padding: 14px 16px;
+    background: #fdf5f4;
+    border-radius: 12px;
+    border-left: 3px solid #c23851;
+  }
+  
+  .detail-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 700;
+    color: #b31237;
+    margin: 0 0 6px;
+  }
+  
+  .detail-text {
+    font-size: 0.95rem;
+    margin: 0;
+    color: #444;
+    line-height: 1.6;
+  }
+  
+  .response-section {
+    background: #fef9f8;
+    border-left-color: #cda8a8;
+  
+    .detail-label {
+      color: #8b5e5e;
+    }
+  
+    .ur {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 1.4rem;
+      color: #b31237;
+      margin-bottom: 4px;
+      direction: rtl;
+      text-align: right;
+    }
+  
+    .transliteration-text {
+      font-style: italic;
+      color: #888;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+  
+    .en-text {
+      font-weight: 500;
+      color: #333;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     PRACTICE SECTION
+  --------------------------------------------------------*/
+  .practice-section {
+    .heading-en {
+      color: #b31237;
+      font-size: 2rem;
+      margin-bottom: 4px;
+      font-weight: 700;
+      text-align: center;
+    }
+  
+    .text-ur {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 1.6rem;
+      color: #b31237;
+      margin-bottom: 28px;
+      direction: rtl;
+      text-align: center;
+    }
+  }
+  
+  .practice-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 2px 12px rgba(179, 18, 55, 0.08);
+    border: 1px solid #ecd1c8;
+    text-align: center;
+  }
+  
+  .practice-prompt {
+    font-size: 1.05rem;
+    color: #333;
+    line-height: 1.7;
+    margin: 0 0 16px;
+    
+    strong {
+      color: #b31237;
+    }
+  }
+  
+  .practice-reveal {
+    background: linear-gradient(135deg, #fdf5f4, #fef9f8);
+    border: 2px dashed #cda8a8;
+    border-radius: 12px;
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    user-select: none;
+  
+    &:hover {
+      background: #fef9f8;
+      border-color: #b31237;
+    }
+  
+    .reveal-text {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      font-size: 1.5rem;
+      color: #b31237;
+      display: block;
+      direction: rtl;
+      line-height: 1.6;
+    }
+  
+    .transliteration-hint {
+      display: block;
+      font-size: 0.9rem;
+      color: #888;
+      font-style: italic;
+      margin-top: 8px;
+      font-family: 'Roboto', sans-serif;
+      direction: ltr;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     LESSON NAVIGATION
+  --------------------------------------------------------*/
+  .lesson-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    margin-top: 20px;
+    border-top: 1px solid #cda8a8;
+  }
+  
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 2px solid #b31237;
+    background: transparent;
+    color: #b31237;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: 'Roboto', sans-serif;
+  
+    &:hover:not(:disabled) {
+      background: #b31237;
+      color: #fff;
+    }
+  
+    &:active:not(:disabled) {
+      transform: scale(0.96);
+    }
+  
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      border-color: #999;
+      color: #999;
+    }
+  
+    svg {
+      flex-shrink: 0;
+    }
+  }
+  
+  .prev-btn svg {
+    margin-right: 2px;
+  }
+  
+  .next-btn svg {
+    margin-left: 2px;
+  }
+  
+  .progress-indicator {
+    font-size: 0.9rem;
+    color: #8b5e5e;
+    font-weight: 500;
+  }
+  
+  /* -------------------------------------------------------
+     RESPONSIVE
+  --------------------------------------------------------*/
+  @media (max-width: 600px) {
+    .lesson-container {
+      padding: 0 14px 30px;
+    }
+  
+    .lesson-header {
+      padding: 40px 16px 30px;
+      margin: 0 -14px 30px;
+      border-radius: 0 0 24px 24px;
+    }
+  
+    .lesson-title-en {
+      font-size: 2rem;
+    }
+  
+    .lesson-subtitle-ur {
+      font-size: 1.7rem;
+    }
+  
+    .card-main {
+      padding: 14px 16px;
+      gap: 10px;
+    }
+  
+    .phrase-ur {
+      font-size: 1.3rem;
+    }
+  
+    .phrase-en {
+      font-size: 0.9rem;
+    }
+  
+    .play-btn {
+      width: 36px;
+      height: 36px;
+    }
+  
+    .card-details {
+      padding: 0 14px 16px;
+    }
+  
+    .lesson-nav {
+      flex-direction: column;
+      gap: 14px;
+    }
+  
+    .nav-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 14px;
+    }
+  
+    .progress-indicator {
+      order: -1;
+    }
+  }
+
+  .btn-primary {
+    background-color: #b31237;
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: 'Roboto', sans-serif;
+  }

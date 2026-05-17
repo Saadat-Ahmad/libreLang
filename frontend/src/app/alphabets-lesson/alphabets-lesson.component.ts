@@ -41,7 +41,7 @@ export class AlphabetsLessonComponent implements OnInit {
         urdu: 'آم',
         roman: 'aam',
         english: 'Mango',
-        imageUrl: '/assets/images/words/mango.jpg',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/40/Mango_4.jpg',
         audioUrl: '/assets/audio/words/aam.mp3'
       }
     },
@@ -222,7 +222,7 @@ export class AlphabetsLessonComponent implements OnInit {
   goToTest() {
     this.saveProgress();
     this.stopAudio();
-    this.router.navigate(['/lessons/alphabet/test']);
+    this.router.navigate(['./practise-1']);
   }
 
   goBack() {

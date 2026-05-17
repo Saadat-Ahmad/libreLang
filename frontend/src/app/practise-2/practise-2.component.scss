@@ -1,0 +1,619 @@
+/* -------------------------------------------------------
+   PRONUNCIATION PRACTICE CONTAINER
+--------------------------------------------------------*/
+.pronunciation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* -------------------------------------------------------
+     HEADER
+  --------------------------------------------------------*/
+  .practice-header {
+    text-align: center;
+    padding: 40px 20px 28px;
+    background: linear-gradient(135deg, #b31237 0%, #c23851 100%);
+    color: #fff;
+    border-radius: 0 0 24px 24px;
+    margin: 0 -20px 28px;
+    box-shadow: 0 6px 24px rgba(179, 18, 55, 0.2);
+  
+    .practice-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+  
+    .practice-subtitle {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 1.5rem;
+      margin: 0 0 16px;
+      opacity: 0.9;
+      direction: rtl;
+    }
+  }
+  
+  .overall-progress {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    padding: 12px 16px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    opacity: 0.9;
+  }
+  
+  .overall-score {
+    font-weight: 700;
+  }
+  
+  .progress-bar-container {
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background: #ecd1c8;
+    border-radius: 3px;
+    transition: width 0.5s ease-out;
+  }
+  
+  /* -------------------------------------------------------
+     WORD SELECTION
+  --------------------------------------------------------*/
+  .word-selection {
+    margin-bottom: 28px;
+  }
+  
+  .section-title {
+    font-size: 1.2rem;
+    color: #b31237;
+    margin: 0 0 14px;
+    font-weight: 600;
+  }
+  
+  .word-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+  
+  .word-select-btn {
+    position: relative;
+    padding: 14px 12px;
+    border: 2px solid #ecd1c8;
+    background: #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-align: center;
+  
+    &:hover {
+      border-color: #c23851;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(179, 18, 55, 0.1);
+    }
+  
+    &.active {
+      border-color: #b31237;
+      background: #fdf5f4;
+      box-shadow: 0 4px 16px rgba(179, 18, 55, 0.15);
+    }
+  
+    &.completed {
+      border-color: #4caf50;
+      background: #f9fdf9;
+  
+      &:hover {
+        border-color: #66bb6a;
+      }
+    }
+  
+    .word-urdu {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 1.2rem;
+      color: #b31237;
+      display: block;
+      direction: rtl;
+      margin-bottom: 3px;
+    }
+  
+    .word-english {
+      font-size: 0.8rem;
+      color: #666;
+      display: block;
+    }
+  
+    .word-score {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: #fff3e0;
+      color: #e65100;
+      padding: 2px 6px;
+      border-radius: 6px;
+  
+      &.high-score {
+        background: #e8f5e9;
+        color: #2e7d32;
+      }
+    }
+  
+    .check-mark {
+      position: absolute;
+      bottom: 6px;
+      right: 8px;
+      color: #4caf50;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     ACTIVE PRACTICE AREA
+  --------------------------------------------------------*/
+  .practice-area {
+    background: #fff;
+    border: 2px solid #ecd1c8;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(179, 18, 55, 0.06);
+  }
+  
+  .active-word-display {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f6ebea;
+  
+    .active-urdu {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 2.8rem;
+      color: #b31237;
+      margin: 0 0 6px;
+      direction: rtl;
+    }
+  
+    .active-transliteration {
+      font-size: 1.1rem;
+      color: #888;
+      font-style: italic;
+      margin: 0 0 3px;
+    }
+  
+    .active-english {
+      font-size: 1.2rem;
+      color: #333;
+      font-weight: 600;
+      margin: 0;
+    }
+  }
+  
+  /* Reference Section */
+  .reference-section {
+    text-align: center;
+    margin-bottom: 20px;
+  
+    .listen-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: linear-gradient(135deg, #b31237, #c23851);
+      color: #fff;
+      border: none;
+      border-radius: 24px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+  
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 14px rgba(179, 18, 55, 0.3);
+      }
+  
+      &:active {
+        transform: scale(0.97);
+      }
+    }
+  
+    .listen-hint {
+      display: block;
+      font-size: 0.8rem;
+      color: #8b5e5e;
+      margin-top: 8px;
+      font-style: italic;
+    }
+  }
+  
+  /* Recording Section */
+  .recording-section {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .recording-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .record-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    background: #fff;
+    border: 2px solid #f44336;
+    color: #f44336;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 28px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  
+    &:hover:not(:disabled) {
+      background: #f44336;
+      color: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(244, 67, 54, 0.3);
+    }
+  
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  
+    .record-icon {
+      font-size: 1.1rem;
+    }
+  }
+  
+  .recording-active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .recording-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: #f44336;
+    font-weight: 600;
+  }
+  
+  .pulse-dot {
+    width: 12px;
+    height: 12px;
+    background: #f44336;
+    border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(244, 67, 54, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(244, 67, 54, 0); }
+  }
+  
+  .audio-level-bar {
+    width: 100%;
+    height: 6px;
+    background: #fce4e4;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .audio-level-fill {
+    height: 100%;
+    background: linear-gradient(to right, #4caf50, #ff9800, #f44336);
+    border-radius: 3px;
+    transition: width 0.1s ease;
+  }
+  
+  .stop-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 24px;
+    background: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      background: #d32f2f;
+      transform: translateY(-2px);
+    }
+  }
+  
+  .analyzing {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #8b5e5e;
+    font-size: 0.95rem;
+  }
+  
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #ecd1c8;
+    border-top-color: #b31237;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  .playback-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 20px;
+    background: #fff;
+    border: 2px solid #cda8a8;
+    color: #8b5e5e;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 12px;
+  
+    &:hover {
+      border-color: #b31237;
+      color: #b31237;
+    }
+  }
+  
+  /* Results Section */
+  .results-section {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #f6ebea;
+  }
+  
+  .score-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .score-circle {
+    position: relative;
+    width: 100px;
+    height: 100px;
+  }
+  
+  .circular-chart {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .circle-bg {
+    fill: none;
+    stroke: #f0f0f0;
+    stroke-width: 3;
+  }
+  
+  .circle {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    transition: stroke-dasharray 0.8s ease-out;
+  }
+  
+  .score-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  
+  .score-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #333;
+    display: block;
+    line-height: 1;
+  }
+  
+  .score-percent {
+    font-size: 0.7rem;
+    color: #888;
+  }
+  
+  .score-emoji {
+    font-size: 2.5rem;
+  }
+  
+  .feedback-text {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 20px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    line-height: 1.5;
+  
+    &.green {
+      background: #f0faf0;
+      color: #2e7d32;
+    }
+  
+    &.yellow {
+      background: #fff8e1;
+      color: #f57f17;
+    }
+  
+    &.orange {
+      background: #fff3e0;
+      color: #e65100;
+    }
+  
+    &.red {
+      background: #fef0f0;
+      color: #c62828;
+    }
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .retry-btn,
+  .next-btn {
+    padding: 10px 22px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .retry-btn {
+    background: #fff;
+    border: 2px solid #cda8a8;
+    color: #8b5e5e;
+  
+    &:hover {
+      border-color: #b31237;
+      color: #b31237;
+    }
+  }
+  
+  .next-btn {
+    background: #b31237;
+    border: none;
+    color: #fff;
+  
+    &:hover {
+      background: #8e0e2a;
+      transform: translateY(-2px);
+    }
+  }
+  
+  /* -------------------------------------------------------
+     EMPTY STATE
+  --------------------------------------------------------*/
+  .empty-state {
+    text-align: center;
+    padding: 50px 20px;
+    color: #8b5e5e;
+  
+    .empty-icon {
+      font-size: 3rem;
+      display: block;
+      margin-bottom: 12px;
+    }
+  
+    h3 {
+      color: #b31237;
+      margin: 0 0 6px;
+      font-size: 1.2rem;
+    }
+  
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     GLOBAL CONTROLS
+  --------------------------------------------------------*/
+  .global-controls {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #cda8a8;
+  }
+  
+  .reset-all-btn {
+    padding: 10px 24px;
+    background: transparent;
+    border: 2px solid #cda8a8;
+    color: #8b5e5e;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      border-color: #f44336;
+      color: #f44336;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     RESPONSIVE
+  --------------------------------------------------------*/
+  @media (max-width: 600px) {
+    .pronunciation-container {
+      padding: 0 12px 30px;
+    }
+  
+    .practice-header {
+      padding: 28px 14px 22px;
+      margin: 0 -12px 22px;
+  
+      .practice-title {
+        font-size: 1.6rem;
+      }
+    }
+  
+    .word-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .active-word-display .active-urdu {
+      font-size: 2.2rem;
+    }
+  
+    .practice-area {
+      padding: 16px;
+    }
+  
+    .action-buttons {
+      flex-direction: column;
+    }
+  
+    .retry-btn,
+    .next-btn {
+      width: 100%;
+    }
+  }

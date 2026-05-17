@@ -1,0 +1,163 @@
+<div class="conversation-lesson-container">
+    <!-- Lesson Header -->
+    <header class="lesson-header">
+      <div class="header-content">
+        <span class="lesson-badge">Conversation Practice</span>
+        <h1 class="lesson-title-en">Real-Life Urdu Conversations</h1>
+        <p class="lesson-subtitle-ur ur">حقیقی زندگی کی اردو گفتگو</p>
+        <p class="lesson-description">
+          Learn Urdu through realistic scenes and dialogues. Click on any line to hear pronunciation.
+        </p>
+      </div>
+      
+      <!-- Scene Progress -->
+      <div class="scene-progress">
+        <div class="progress-bar-container">
+          <div class="progress-bar" [style.width.%]="progressPercentage"></div>
+        </div>
+        <div class="scene-indicators">
+          @for (scene of scenes; track scene.id; let idx = $index) {
+            <button 
+              class="scene-dot" 
+              [class.active]="idx === activeSceneIndex"
+              [class.completed]="idx < activeSceneIndex"
+              (click)="goToScene(idx)"
+              [title]="scene.title">
+              <span class="dot-icon">{{ scene.icon }}</span>
+            </button>
+          }
+        </div>
+      </div>
+    </header>
+  
+    <!-- Active Scene -->
+    @if (activeScene) {
+      <div class="scene-container" @fadeSlideIn>
+        <!-- Scene Setting -->
+        <div class="scene-setting-card">
+          <div class="setting-header">
+            <span class="setting-icon">{{ activeScene.icon }}</span>
+            <div>
+              <h2 class="setting-title">{{ activeScene.title }}</h2>
+              <p class="setting-title-ur ur">{{ activeScene.titleUrdu }}</p>
+            </div>
+          </div>
+          
+          <div class="setting-visual" [class]="activeScene.imageClass">
+            <div class="setting-overlay">
+              <p class="setting-text">{{ activeScene.setting }}</p>
+            </div>
+          </div>
+          
+          <div class="setting-context">
+            <span class="context-icon">💡</span>
+            <p>{{ activeScene.context }}</p>
+          </div>
+        </div>
+  
+        <!-- Vocabulary Preview -->
+        <div class="vocabulary-section">
+          <button class="vocab-toggle" (click)="expandedVocabulary = expandedVocabulary === activeScene.id ? null : activeScene.id">
+            📚 Key Vocabulary 
+            <span>{{ expandedVocabulary === activeScene.id ? '▲' : '▼' }}</span>
+          </button>
+          
+          @if (expandedVocabulary === activeScene.id) {
+            <div class="vocabulary-grid" @fadeSlideIn>
+              @for (word of activeScene.vocabulary; track word.urdu) {
+                <div class="vocab-card" (click)="speakVocabulary(word)">
+                  <p class="vocab-urdu ur">{{ word.urdu }}</p>
+                  <p class="vocab-transliteration">{{ word.transliteration }}</p>
+                  <p class="vocab-english">{{ word.english }}</p>
+                  <button class="speak-mini-btn" (click)="$event.stopPropagation(); speakVocabulary(word)">
+                    🔊
+                  </button>
+                </div>
+              }
+            </div>
+          }
+        </div>
+  
+        <!-- Dialogue Section -->
+        <div class="dialogue-section">
+          <div class="dialogue-header">
+            <h3>🗣️ Conversation</h3>
+            <button class="toggle-translation-btn" (click)="toggleTranslation()">
+              {{ showTranslation ? 'Hide' : 'Show' }} Translations
+            </button>
+          </div>
+          
+          <div class="dialogue-container" @staggerDialogue>
+            @for (line of activeScene.dialogue; track line.english; let idx = $index) {
+              <div 
+                class="dialogue-line"
+                [class.you]="line.speaker === 'you'"
+                [class.other]="line.speaker !== 'you'"
+                (click)="speakLine(line)">
+                
+                <div class="line-header">
+                  <span class="speaker-badge" [class.is-you]="line.speaker === 'you'">
+                    {{ line.speaker === 'you' ? '👤 You' : '💬 ' + line.speakerLabel }}
+                  </span>
+                  <button class="speak-line-btn" (click)="$event.stopPropagation(); speakLine(line)" title="Listen">
+                    🔊
+                  </button>
+                </div>
+                
+                <div class="line-content">
+                  <p class="urdu-text ur">{{ line.urdu }}</p>
+                  <p class="transliteration-text">{{ line.transliteration }}</p>
+                  
+                  @if (showTranslation) {
+                    <p class="english-text">{{ line.english }}</p>
+                  }
+                </div>
+              </div>
+            }
+          </div>
+        </div>
+  
+        <!-- Cultural Note -->
+        <div class="cultural-note">
+          <span class="cultural-icon">🎭</span>
+          <div>
+            <h4>Cultural Insight</h4>
+            <p>{{ activeScene.culturalNote }}</p>
+          </div>
+        </div>
+      </div>
+    }
+  
+    <!-- Scene Navigation -->
+    <div class="scene-navigation">
+      <button 
+        class="nav-btn prev-btn" 
+        [disabled]="activeSceneIndex === 0"
+        (click)="previousScene()">
+        ← Previous Scene
+      </button>
+      
+      <span class="scene-counter">
+        Scene {{ activeSceneIndex + 1 }} of {{ totalScenes }}
+      </span>
+      
+      <button 
+        class="nav-btn next-btn" 
+        [disabled]="activeSceneIndex === totalScenes - 1"
+        (click)="nextScene()">
+        Next Scene →
+      </button>
+    </div>
+  
+    <!-- Practice Tips -->
+    <div class="practice-tips">
+      <h3>📝 Practice Tips</h3>
+      <ul>
+        <li>Read each dialogue aloud to practice pronunciation</li>
+        <li>Try to memorize common phrases from each scene</li>
+        <li>Practice with a partner, switching roles</li>
+        <li>Record yourself and compare with the audio</li>
+        <li>Create your own variations of the dialogues</li>
+      </ul>
+    </div>
+  </div>

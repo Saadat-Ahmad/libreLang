@@ -1,0 +1,728 @@
+/* -------------------------------------------------------
+   PRACTICE SHEET CONTAINER
+--------------------------------------------------------*/
+.practice-sheet-container {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 0 20px 50px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* -------------------------------------------------------
+     PRACTICE HEADER
+  --------------------------------------------------------*/
+  .practice-header {
+    text-align: center;
+    padding: 40px 20px 30px;
+    background: linear-gradient(135deg, #b31237 0%, #c23851 100%);
+    color: #fff;
+    border-radius: 0 0 24px 24px;
+    margin: 0 -20px 30px;
+    box-shadow: 0 6px 24px rgba(179, 18, 55, 0.2);
+  
+    .practice-title-en {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+  
+    .practice-subtitle-ur {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 1.6rem;
+      margin: 0;
+      opacity: 0.9;
+      direction: rtl;
+    }
+  }
+  
+  .score-board {
+    margin-top: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 14px 18px;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .total-score {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  
+  .score-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    opacity: 0.9;
+    font-weight: 500;
+  }
+  
+  .score-bar-container {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  
+  .score-bar {
+    height: 100%;
+    background: #ecd1c8;
+    border-radius: 3px;
+    transition: width 0.6s ease-out;
+  }
+  
+  .score-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: right;
+  }
+  
+  /* -------------------------------------------------------
+     EXERCISE TABS
+  --------------------------------------------------------*/
+  .exercise-tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  
+    &::-webkit-scrollbar {
+      height: 3px;
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: #cda8a8;
+      border-radius: 2px;
+    }
+  }
+  
+  .tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border: 2px solid #ecd1c8;
+    background: #fff;
+    color: #b31237;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+  
+    &:hover {
+      background: #fdf5f4;
+      border-color: #c23851;
+    }
+  
+    &.active {
+      background: #b31237;
+      color: #fff;
+      border-color: #b31237;
+      box-shadow: 0 4px 12px rgba(179, 18, 55, 0.25);
+    }
+  
+    .tab-icon {
+      font-size: 1rem;
+    }
+  
+    .tab-badge {
+      background: rgba(255, 255, 255, 0.25);
+      padding: 2px 7px;
+      border-radius: 10px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     EXERCISE SECTIONS
+  --------------------------------------------------------*/
+  .exercise-section {
+    margin-bottom: 40px;
+  }
+  
+  .exercise-title {
+    font-size: 1.5rem;
+    color: #b31237;
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+  
+  .exercise-instruction {
+    font-size: 0.9rem;
+    color: #8b5e5e;
+    margin: 0 0 20px;
+    line-height: 1.5;
+  }
+  
+  /* -------------------------------------------------------
+     MATCHING EXERCISE
+  --------------------------------------------------------*/
+  .matching-container {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .matching-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .column-title {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #b31237;
+    margin: 0 0 4px;
+    text-align: center;
+    font-weight: 700;
+  }
+  
+  .matching-divider {
+    width: 2px;
+    background: linear-gradient(to bottom, transparent, #cda8a8 30%, #cda8a8 70%, transparent);
+    border-radius: 1px;
+    margin: 20px 0;
+  }
+  
+  .match-card {
+    padding: 12px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    border: 2px solid #ecd1c8;
+    background: #fff;
+    text-align: center;
+    user-select: none;
+  
+    &:hover:not(.matched) {
+      border-color: #c23851;
+      transform: translateY(-1px);
+    }
+  
+    &.selected {
+      border-color: #b31237;
+      background: #fdf5f4;
+      box-shadow: 0 4px 12px rgba(179, 18, 55, 0.15);
+      transform: translateY(-2px);
+    }
+  
+    &.matched {
+      background: #f0faf0;
+      border-color: #4caf50;
+      opacity: 0.75;
+      cursor: default;
+    }
+  }
+  
+  .urdu-card .urdu-text {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-size: 1.2rem;
+    color: #b31237;
+    margin: 0;
+    direction: rtl;
+    line-height: 1.5;
+  }
+  
+  .english-card .english-text {
+    font-size: 0.9rem;
+    color: #333;
+    margin: 0;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  
+  .match-check {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    width: 20px;
+    height: 20px;
+    background: #4caf50;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+  
+  /* -------------------------------------------------------
+     EXERCISE ACTIONS
+  --------------------------------------------------------*/
+  .exercise-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #ecd1c8;
+  }
+  
+  .match-progress {
+    font-size: 0.85rem;
+    color: #8b5e5e;
+    font-weight: 500;
+  }
+  
+  .reset-btn {
+    padding: 10px 20px;
+    border: 2px solid #b31237;
+    background: transparent;
+    color: #b31237;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      background: #b31237;
+      color: #fff;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     FILL IN THE BLANKS
+  --------------------------------------------------------*/
+  .fillblank-container {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .fillblank-card {
+    background: #fff;
+    border: 2px solid #ecd1c8;
+    border-radius: 12px;
+    padding: 16px;
+    transition: all 0.3s ease;
+  
+    &.correct {
+      border-color: #4caf50;
+      background: #f9fdf9;
+    }
+  
+    &.incorrect {
+      border-color: #f44336;
+      background: #fef9f9;
+    }
+  }
+  
+  .sentence-text {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-size: 1.3rem;
+    color: #333;
+    margin: 0 0 12px;
+    direction: rtl;
+    text-align: right;
+    line-height: 1.7;
+    background: #fdf5f4;
+    padding: 10px 14px;
+    border-radius: 8px;
+  }
+  
+  .input-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  .fill-input {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px 14px;
+    border: 2px solid #cda8a8;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-family: 'Noto Nastaliq Urdu', serif;
+    direction: rtl;
+    transition: border-color 0.2s ease;
+    background: #fff;
+  
+    &:focus {
+      outline: none;
+      border-color: #b31237;
+      box-shadow: 0 0 0 3px rgba(179, 18, 55, 0.08);
+    }
+  
+    &:disabled {
+      background: #f5f5f5;
+      cursor: not-allowed;
+    }
+  
+    &::placeholder {
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+  }
+  
+  .input-actions {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .hint-btn,
+  .check-btn {
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .hint-btn {
+    background: #fff;
+    border: 1.5px solid #cda8a8;
+    color: #8b5e5e;
+  
+    &:hover {
+      border-color: #b31237;
+      color: #b31237;
+    }
+  }
+  
+  .check-btn {
+    background: #b31237;
+    color: #fff;
+    border: none;
+  
+    &:hover {
+      background: #8e0e2a;
+    }
+  }
+  
+  .result-icon {
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+  
+  .correct-icon {
+    color: #4caf50;
+    background: #f0faf0;
+  }
+  
+  .incorrect-icon {
+    color: #f44336;
+    background: #fef0f0;
+  }
+  
+  .correct-answer-hint {
+    margin-top: 10px;
+    padding: 8px 12px;
+    background: #fef9f8;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #8b5e5e;
+  
+    strong {
+      font-family: 'Noto Nastaliq Urdu', serif;
+      font-size: 1.1rem;
+      color: #b31237;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     MULTIPLE CHOICE
+  --------------------------------------------------------*/
+  .mcq-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .mcq-card {
+    background: #fff;
+    border: 2px solid #ecd1c8;
+    border-radius: 12px;
+    padding: 18px;
+    transition: all 0.3s ease;
+  
+    &.correct-card {
+      border-color: #4caf50;
+    }
+  
+    &.incorrect-card {
+      border-color: #f44336;
+    }
+  }
+  
+  .question-text {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 14px;
+    line-height: 1.5;
+  }
+  
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border: 2px solid #ecd1c8;
+    border-radius: 8px;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    text-align: left;
+  
+    &:hover:not(:disabled) {
+      border-color: #c23851;
+      background: #fdf5f4;
+    }
+  
+    &:disabled {
+      cursor: not-allowed;
+    }
+  
+    &.selected-option {
+      border-color: #b31237;
+    }
+  
+    &.correct-option {
+      border-color: #4caf50;
+      background: #f0faf0;
+    }
+  
+    &.wrong-option {
+      border-color: #f44336;
+      background: #fef0f0;
+    }
+  }
+  
+  .option-letter {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fdf5f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #b31237;
+    flex-shrink: 0;
+  }
+  
+  .option-text {
+    flex: 1;
+    color: #333;
+    font-weight: 500;
+  }
+  
+  .feedback-text {
+    margin-top: 10px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  
+  .feedback-correct {
+    background: #f0faf0;
+    color: #4caf50;
+  }
+  
+  .feedback-incorrect {
+    background: #fef0f0;
+    color: #f44336;
+  }
+  
+  /* -------------------------------------------------------
+     PRONUNCIATION
+  --------------------------------------------------------*/
+  .pronunciation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .pronunciation-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid #ecd1c8;
+    border-radius: 12px;
+    gap: 14px;
+    transition: all 0.3s ease;
+  
+    &.practiced {
+      border-color: #4caf50;
+      background: #f9fdf9;
+    }
+  }
+  
+  .pronunciation-content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .urdu-phrase {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-size: 1.3rem;
+    color: #b31237;
+    margin: 0 0 4px;
+    direction: rtl;
+    text-align: right;
+  }
+  
+  .transliteration-text {
+    font-size: 0.85rem;
+    color: #888;
+    font-style: italic;
+    margin: 0;
+  }
+  
+  .pronunciation-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  
+  .listen-btn,
+  .practiced-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .listen-btn {
+    background: #b31237;
+    color: #fff;
+    border: none;
+  
+    &:hover {
+      background: #8e0e2a;
+    }
+  }
+  
+  .practiced-btn {
+    background: #fff;
+    border: 1.5px solid #cda8a8;
+    color: #8b5e5e;
+  
+    &:hover {
+      border-color: #4caf50;
+      color: #4caf50;
+    }
+  
+    &.marked {
+      background: #f0faf0;
+      border-color: #4caf50;
+      color: #4caf50;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     COMPLETION MESSAGE
+  --------------------------------------------------------*/
+  .completion-message {
+    text-align: center;
+    padding: 30px;
+    background: linear-gradient(135deg, #f0faf0, #e8f5e9);
+    border: 2px solid #4caf50;
+    border-radius: 16px;
+    margin-top: 30px;
+  }
+  
+  .completion-content {
+    h3 {
+      color: #2e7d32;
+      margin: 8px 0 4px;
+      font-size: 1.3rem;
+    }
+  
+    p {
+      color: #558b2f;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+  }
+  
+  .completion-emoji {
+    font-size: 2.5rem;
+  }
+  
+  /* -------------------------------------------------------
+     RESPONSIVE
+  --------------------------------------------------------*/
+  @media (max-width: 600px) {
+    .practice-sheet-container {
+      padding: 0 12px 30px;
+    }
+  
+    .practice-header {
+      padding: 30px 14px 24px;
+      margin: 0 -12px 24px;
+    }
+  
+    .matching-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .matching-divider {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, #cda8a8 30%, #cda8a8 70%, transparent);
+      margin: 8px 0;
+    }
+  
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .pronunciation-card {
+      flex-direction: column;
+      align-items: stretch;
+      text-align: center;
+    }
+  
+    .pronunciation-actions {
+      justify-content: center;
+    }
+  
+    .exercise-tabs {
+      gap: 4px;
+    }
+  
+    .tab-btn {
+      padding: 8px 12px;
+      font-size: 0.8rem;
+    }
+  }

@@ -1,0 +1,594 @@
+/* -------------------------------------------------------
+   CONVERSATION LESSON CONTAINER
+--------------------------------------------------------*/
+.conversation-lesson-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px 50px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* -------------------------------------------------------
+     LESSON HEADER
+  --------------------------------------------------------*/
+  .lesson-header {
+    text-align: center;
+    padding: 40px 20px 28px;
+    background: linear-gradient(135deg, #b31237 0%, #c23851 100%);
+    color: #fff;
+    border-radius: 0 0 24px 24px;
+    margin: 0 -20px 28px;
+    box-shadow: 0 6px 24px rgba(179, 18, 55, 0.2);
+  
+    .lesson-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.18);
+      padding: 5px 16px;
+      border-radius: 14px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+  
+    .lesson-title-en {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0 0 4px;
+    }
+  
+    .lesson-subtitle-ur {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 1.4rem;
+      margin: 0 0 8px;
+      opacity: 0.9;
+      direction: rtl;
+    }
+  
+    .lesson-description {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      max-width: 500px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+  }
+  
+  .scene-progress {
+    margin-top: 18px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .progress-bar-container {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  
+    .progress-bar {
+      height: 100%;
+      background: #ecd1c8;
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+  }
+  
+  .scene-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .scene-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+  
+    &:hover {
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+  
+    &.active {
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.15);
+    }
+  
+    &.completed {
+      border-color: #4caf50;
+      background: rgba(76, 175, 80, 0.3);
+    }
+  }
+  
+  /* -------------------------------------------------------
+     SCENE SETTING CARD
+  --------------------------------------------------------*/
+  .scene-setting-card {
+    background: #fff;
+    border: 2px solid #ecd1c8;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(179, 18, 55, 0.06);
+  }
+  
+  .setting-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 20px;
+    border-bottom: 1px solid #f6ebea;
+  
+    .setting-icon {
+      font-size: 2rem;
+    }
+  
+    .setting-title {
+      font-size: 1.2rem;
+      color: #333;
+      margin: 0;
+      font-weight: 700;
+    }
+  
+    .setting-title-ur {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 0.95rem;
+      color: #b31237;
+      margin: 2px 0 0;
+      direction: rtl;
+    }
+  }
+  
+  .setting-visual {
+    height: 120px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    &.scene-restaurant {
+      background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+    }
+  
+    &.scene-market {
+      background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+    }
+  
+    &.scene-meeting {
+      background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+    }
+  
+    &.scene-family {
+      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+    }
+  }
+  
+  .setting-overlay {
+    background: rgba(255, 255, 255, 0.85);
+    padding: 14px 20px;
+    border-radius: 10px;
+    margin: 0 20px;
+    text-align: center;
+  
+    .setting-text {
+      font-size: 0.95rem;
+      color: #555;
+      margin: 0;
+      line-height: 1.5;
+      font-style: italic;
+    }
+  }
+  
+  .setting-context {
+    display: flex;
+    gap: 10px;
+    padding: 14px 20px;
+    background: #fdf5f4;
+    border-top: 1px solid #f6ebea;
+  
+    .context-icon {
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+  
+    p {
+      font-size: 0.85rem;
+      color: #8b5e5e;
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     VOCABULARY SECTION
+  --------------------------------------------------------*/
+  .vocabulary-section {
+    margin-bottom: 24px;
+  }
+  
+  .vocab-toggle {
+    width: 100%;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid #ecd1c8;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #b31237;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.25s ease;
+  
+    &:hover {
+      border-color: #c23851;
+      background: #fdf5f4;
+    }
+  }
+  
+  .vocabulary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+  }
+  
+  .vocab-card {
+    background: #fff;
+    border: 1.5px solid #f6ebea;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+  
+    &:hover {
+      border-color: #cda8a8;
+      transform: translateY(-2px);
+    }
+  }
+  
+  .vocab-urdu {
+    font-family: 'Noto Nastaliq Urdu', serif !important;
+    font-size: 1.2rem;
+    color: #b31237;
+    margin: 0 0 3px;
+    direction: rtl;
+  }
+  
+  .vocab-transliteration {
+    font-size: 0.75rem;
+    color: #888;
+    font-style: italic;
+    margin: 0 0 2px;
+  }
+  
+  .vocab-english {
+    font-size: 0.8rem;
+    color: #555;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .speak-mini-btn {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: #fdf5f4;
+    cursor: pointer;
+    font-size: 0.7rem;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      background: #b31237;
+      color: #fff;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     DIALOGUE SECTION
+  --------------------------------------------------------*/
+  .dialogue-section {
+    margin-bottom: 24px;
+  }
+  
+  .dialogue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  
+    h3 {
+      font-size: 1.1rem;
+      color: #333;
+      margin: 0;
+    }
+  }
+  
+  .toggle-translation-btn {
+    padding: 7px 14px;
+    border: 1.5px solid #cda8a8;
+    background: #fff;
+    color: #8b5e5e;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      border-color: #b31237;
+      color: #b31237;
+    }
+  }
+  
+  .dialogue-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .dialogue-line {
+    padding: 14px 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: 1.5px solid transparent;
+  
+    &.you {
+      background: #fdf5f4;
+      margin-left: 30px;
+      border-color: #f6ebea;
+  
+      &:hover {
+        border-color: #c23851;
+        background: #fef9f8;
+      }
+    }
+  
+    &.other {
+      background: #f8f9fa;
+      margin-right: 30px;
+      border-color: #e9ecef;
+  
+      &:hover {
+        border-color: #4a90d9;
+        background: #f0f4f8;
+      }
+    }
+  }
+  
+  .line-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  
+  .speaker-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: #e9ecef;
+    color: #666;
+  
+    &.is-you {
+      background: #b31237;
+      color: #fff;
+    }
+  }
+  
+  .speak-line-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-size: 0.7rem;
+    transition: all 0.2s ease;
+  
+    &:hover {
+      background: #b31237;
+      color: #fff;
+    }
+  }
+  
+  .line-content {
+    .urdu-text {
+      font-family: 'Noto Nastaliq Urdu', serif !important;
+      font-size: 1.3rem;
+      color: #333;
+      margin: 0 0 6px;
+      direction: rtl;
+      line-height: 1.6;
+    }
+  
+    .transliteration-text {
+      font-size: 0.85rem;
+      color: #888;
+      font-style: italic;
+      margin: 0 0 4px;
+    }
+  
+    .english-text {
+      font-size: 0.9rem;
+      color: #4a90d9;
+      margin: 0;
+      padding-top: 4px;
+      border-top: 1px dashed #e0e0e0;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     CULTURAL NOTE
+  --------------------------------------------------------*/
+  .cultural-note {
+    display: flex;
+    gap: 12px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, #fff8e1, #fff3e0);
+    border-radius: 12px;
+    border-left: 4px solid #ff9800;
+    margin-bottom: 28px;
+  
+    .cultural-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+  
+    h4 {
+      font-size: 0.9rem;
+      color: #e65100;
+      margin: 0 0 4px;
+    }
+  
+    p {
+      font-size: 0.85rem;
+      color: #8b5e5e;
+      margin: 0;
+      line-height: 1.6;
+    }
+  }
+  
+  /* -------------------------------------------------------
+     SCENE NAVIGATION
+  --------------------------------------------------------*/
+  .scene-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+    padding: 16px 0;
+    border-top: 1px solid #cda8a8;
+    border-bottom: 1px solid #cda8a8;
+  }
+  
+  .nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 11px 22px;
+    border: 2px solid #b31237;
+    background: transparent;
+    color: #b31237;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 22px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  
+    &:hover:not(:disabled) {
+      background: #b31237;
+      color: #fff;
+    }
+  
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+      border-color: #999;
+      color: #999;
+    }
+  }
+  
+  .scene-counter {
+    font-size: 0.85rem;
+    color: #8b5e5e;
+    font-weight: 500;
+  }
+  
+  /* -------------------------------------------------------
+     PRACTICE TIPS
+  --------------------------------------------------------*/
+  .practice-tips {
+    background: #fdf5f4;
+    border-radius: 14px;
+    padding: 20px 24px;
+    border: 1.5px solid #ecd1c8;
+  
+    h3 {
+      font-size: 1.05rem;
+      color: #b31237;
+      margin: 0 0 10px;
+    }
+  
+    ul {
+      margin: 0;
+      padding-left: 20px;
+  
+      li {
+        font-size: 0.85rem;
+        color: #555;
+        margin-bottom: 6px;
+        line-height: 1.5;
+      }
+    }
+  }
+  
+  /* -------------------------------------------------------
+     RESPONSIVE
+  --------------------------------------------------------*/
+  @media (max-width: 600px) {
+    .conversation-lesson-container {
+      padding: 0 12px 30px;
+    }
+  
+    .lesson-header {
+      padding: 28px 14px 22px;
+      margin: 0 -12px 22px;
+      border-radius: 0 0 18px 18px;
+  
+      .lesson-title-en {
+        font-size: 1.5rem;
+      }
+    }
+  
+    .dialogue-line {
+      &.you { margin-left: 15px; }
+      &.other { margin-right: 15px; }
+    }
+  
+    .urdu-text {
+      font-size: 1.1rem;
+    }
+  
+    .vocabulary-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .scene-navigation {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .nav-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  
+    .scene-counter {
+      order: -1;
+    }
+  }

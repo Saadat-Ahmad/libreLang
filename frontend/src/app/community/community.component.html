@@ -1,0 +1,341 @@
+<div class="community-container">
+    <!-- Community Header -->
+    <header class="community-header">
+      <div class="header-content">
+        <h1 class="header-title">Urdu Literature Community</h1>
+        <p class="header-subtitle ur">اردو ادب کی کمیونٹی</p>
+        <p class="header-description">
+          Join groups, share your work, and connect with fellow Urdu literature enthusiasts
+        </p>
+      </div>
+      
+      <!-- Stats Bar -->
+      <div class="stats-bar">
+        <div class="stat-item">
+          <span class="stat-value">{{ groups.length }}</span>
+          <span class="stat-label">Groups</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ totalPosts }}</span>
+          <span class="stat-label">Posts</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">{{ totalMembers }}</span>
+          <span class="stat-label">Members</span>
+        </div>
+      </div>
+    </header>
+  
+    <!-- Tab Navigation -->
+    <nav class="tab-nav">
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'groups'"
+        (click)="switchTab('groups')">
+        <span>📚</span> Browse Groups
+      </button>
+      <button 
+        class="tab-btn" 
+        [class.active]="activeTab === 'posts'"
+        (click)="switchTab('posts')">
+        <span>📝</span> All Posts
+      </button>
+    </nav>
+  
+    <!-- Create Post Button -->
+    <div class="create-post-bar">
+      <button class="create-post-btn" (click)="openCreatePost()">
+        <span>✏️</span> Create New Post
+      </button>
+    </div>
+  
+    <!-- Groups View -->
+    @if (activeTab === 'groups') {
+      <div class="groups-view">
+        @for (categoryGroup of groupsByCategory; track categoryGroup.category) {
+          <section class="category-section" @fadeSlideIn>
+            <h2 class="category-title">{{ categoryGroup.categoryName }}</h2>
+            
+            <div class="groups-grid" @staggerList>
+              @for (group of categoryGroup.groups; track group.id) {
+                <div class="group-card" (click)="selectGroup(group)">
+                  <div class="group-cover">
+                    <span class="group-icon">{{ group.icon }}</span>
+                    @if (group.isJoined) {
+                      <span class="joined-badge">✓ Joined</span>
+                    }
+                  </div>
+                  
+                  <div class="group-info">
+                    <h3 class="group-name">{{ group.name }}</h3>
+                    <p class="group-name-ur ur">{{ group.nameUrdu }}</p>
+                    <p class="group-description">{{ group.description }}</p>
+                  </div>
+                  
+                  <div class="group-stats">
+                    <div class="stat">
+                      <span class="stat-count">{{ group.membersCount }}</span>
+                      <span class="stat-text">members</span>
+                    </div>
+                    <div class="stat">
+                      <span class="stat-count">{{ group.postsCount }}</span>
+                      <span class="stat-text">posts</span>
+                    </div>
+                  </div>
+                  
+                  <div class="group-actions">
+                    <button 
+                      class="join-btn"
+                      [class.joined]="group.isJoined"
+                      (click)="toggleJoinGroup(group.id, $event)">
+                      {{ group.isJoined ? 'Joined' : 'Join Group' }}
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          </section>
+        }
+      </div>
+    }
+  
+    <!-- Posts View -->
+    @if (activeTab === 'posts') {
+      <div class="posts-view">
+        <!-- Group Header if viewing specific group -->
+        @if (selectedGroup) {
+          <div class="selected-group-header" @fadeSlideIn>
+            <button class="back-btn" (click)="goBackToGroups()">
+              ← Back to Groups
+            </button>
+            <div class="group-header-content">
+              <span class="group-header-icon">{{ selectedGroup.icon }}</span>
+              <div>
+                <h2>{{ selectedGroup.name }}</h2>
+                <p class="ur">{{ selectedGroup.nameUrdu }}</p>
+              </div>
+            </div>
+            <button 
+              class="join-btn"
+              [class.joined]="selectedGroup.isJoined"
+              (click)="toggleJoinGroup(selectedGroup.id, $event)">
+              {{ selectedGroup.isJoined ? 'Joined' : 'Join Group' }}
+            </button>
+          </div>
+        }
+  
+        <!-- Trending Section -->
+        @if (!selectedGroupId) {
+          <div class="trending-section" @fadeSlideIn>
+            <h3 class="section-title">🔥 Trending Posts</h3>
+            <div class="trending-posts">
+              @for (post of trendingPosts; track post.id; let idx = $index) {
+                <div class="trending-card">
+                  <div class="trending-rank">#{{ idx + 1 }}</div>
+                  <div class="trending-info">
+                    <p class="trending-title">{{ post.title }}</p>
+                    <p class="trending-meta">
+                      {{ getVoteCount(post) }} votes · {{ post.commentsCount }} comments
+                    </p>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+  
+        <!-- Posts Feed -->
+        <div class="posts-feed" @staggerList>
+          @for (post of filteredPosts; track post.id) {
+            <div class="post-card">
+              <!-- Post Header -->
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="author-avatar">
+                    <span>{{ post.author.name.charAt(0) }}</span>
+                  </div>
+                  <div class="author-info">
+                    <span class="author-name">{{ post.author.name }}</span>
+                    <span class="post-time">{{ getTimeAgo(post.createdAt) }}</span>
+                  </div>
+                </div>
+                @if (!selectedGroupId) {
+                  @if (getGroupById(post.groupId); as postGroup) {
+                    <span class="post-group-badge">
+                      {{ postGroup.name }}
+                    </span>
+                  }
+                }
+                <span class="post-type-badge">
+                  {{ getPostTypeIcon(post.type) }} {{ post.type }}
+                </span>
+              </div>
+              
+              <!-- Post Content -->
+              <div class="post-content">
+                <h3 class="post-title">{{ post.title }}</h3>
+                <p class="post-text">{{ post.content }}</p>
+                
+                @if (post.tags.length > 0) {
+                  <div class="post-tags">
+                    @for (tag of post.tags; track tag) {
+                      <span class="tag">{{ tag }}</span>
+                    }
+                  </div>
+                }
+              </div>
+              
+              <!-- Post Actions -->
+              <div class="post-actions">
+                <div class="vote-buttons">
+                  <button 
+                    class="vote-btn upvote"
+                    [class.active]="post.userVote === 'up'"
+                    (click)="votePost(post.id, 'up', $event)">
+                    ▲
+                  </button>
+                  <span class="vote-count" [class.positive]="getVoteCount(post) > 0">
+                    {{ getVoteCount(post) }}
+                  </span>
+                  <button 
+                    class="vote-btn downvote"
+                    [class.active]="post.userVote === 'down'"
+                    (click)="votePost(post.id, 'down', $event)">
+                    ▼
+                  </button>
+                </div>
+                
+                <div class="post-actions-right">
+                  <button class="action-btn">
+                    💬 {{ post.commentsCount }}
+                  </button>
+                  <button class="action-btn">↗ Share</button>
+                  <button class="action-btn">🔖 Save</button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+  
+        <!-- Empty State -->
+        @if (filteredPosts.length === 0) {
+          <div class="empty-state" @fadeSlideIn>
+            <span class="empty-icon">📝</span>
+            <h3>No posts yet</h3>
+            <p>Be the first to create a post in this group!</p>
+            <button class="create-post-btn" (click)="openCreatePost()">
+              Create Post
+            </button>
+          </div>
+        }
+      </div>
+    }
+  
+    <!-- Create Post Modal -->
+    @if (showCreatePost) {
+      <div class="modal-overlay" (click)="closeCreatePost()">
+        <div class="modal-content" (click)="$event.stopPropagation()" @fadeSlideIn>
+          <div class="modal-header">
+            <h2>Create New Post</h2>
+            <button class="close-btn" (click)="closeCreatePost()">✕</button>
+          </div>
+          
+          <div class="modal-body">
+            <!-- Group Selection -->
+            <div class="form-group">
+              <label>Select Group</label>
+              <select [(ngModel)]="newPost.groupId" class="form-select">
+                <option [ngValue]="0" disabled>Choose a group...</option>
+                @for (group of groups; track group.id) {
+                  <option [ngValue]="group.id">
+                    {{ group.icon }} {{ group.name }}
+                  </option>
+                }
+              </select>
+            </div>
+            
+            <!-- Post Type -->
+            <div class="form-group">
+              <label>Post Type</label>
+              <div class="type-selector">
+                <button 
+                  class="type-btn"
+                  [class.active]="newPost.type === 'discussion'"
+                  (click)="newPost.type = 'discussion'">
+                  💭 Discussion
+                </button>
+                <button 
+                  class="type-btn"
+                  [class.active]="newPost.type === 'poetry'"
+                  (click)="newPost.type = 'poetry'">
+                  📝 Poetry
+                </button>
+                <button 
+                  class="type-btn"
+                  [class.active]="newPost.type === 'question'"
+                  (click)="newPost.type = 'question'">
+                  ❓ Question
+                </button>
+                <button 
+                  class="type-btn"
+                  [class.active]="newPost.type === 'resource'"
+                  (click)="newPost.type = 'resource'">
+                  📚 Resource
+                </button>
+              </div>
+            </div>
+            
+            <!-- Title -->
+            <div class="form-group">
+              <label>Title</label>
+              <input 
+                type="text" 
+                [(ngModel)]="newPost.title" 
+                class="form-input"
+                placeholder="Enter post title...">
+            </div>
+            
+            <!-- Content -->
+            <div class="form-group">
+              <label>Content</label>
+              <textarea 
+                [(ngModel)]="newPost.content" 
+                class="form-textarea"
+                rows="6"
+                placeholder="Write your post content here..."></textarea>
+            </div>
+            
+            <!-- Tags -->
+            <div class="form-group">
+              <label>Tags</label>
+              <div class="tags-input">
+                @for (tag of newPost.tags; track tag) {
+                  <span class="tag removable">
+                    {{ tag }}
+                    <button (click)="removeTag(tag)">✕</button>
+                  </span>
+                }
+                <input 
+                  type="text" 
+                  [(ngModel)]="newTag" 
+                  class="tag-input"
+                  placeholder="Add tag..."
+                  (keyup.enter)="addTag()">
+                <button class="add-tag-btn" (click)="addTag()">+</button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="modal-footer">
+            <button class="cancel-btn" (click)="closeCreatePost()">Cancel</button>
+            <button 
+              class="submit-btn" 
+              (click)="submitPost()"
+              [disabled]="!newPost.title || !newPost.content || !newPost.groupId">
+              Publish Post
+            </button>
+          </div>
+        </div>
+      </div>
+    }
+  </div>
